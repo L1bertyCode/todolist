@@ -1,20 +1,28 @@
-import { TaskType } from "./App"
+import { useState } from "react"
+import { FilterValuesType, TaskType } from "./App"
 import { Button } from "./Button"
 
 type PropsType = {
   title: string
   tasks: TaskType[]
   date?: string
-  removeTask: (taskId: number) => void
+  removeTask: (taskId: string) => void
+  changeFilter: (filter: FilterValuesType) => void
+  addTask: (title: string) => void
 }
-export const Todolist = (props: PropsType) => {
-  const { title, tasks, date, removeTask } = props
+export const Todolist = ({ title, tasks, date, removeTask, changeFilter, addTask }: PropsType) => {
+  const [value, setValue] = useState<string>("")
   return (
     <div>
       <h3>{title}</h3>
       <div>
-        <input />
-        <button>+</button>
+        <input value={value} onChange={(e) => setValue(e.currentTarget.value)} />
+        <button onClick={() => {
+          if (value.trim()) {
+            addTask(value)
+            setValue("")
+          }
+        }}>+</button>
       </div>
       {tasks.length === 0 ? (
         <p>Тасок нет</p>
@@ -29,9 +37,9 @@ export const Todolist = (props: PropsType) => {
           ))}
         </ul>)}
       <div>
-        <Button title={'All'} />
-        <Button title={'Active'} />
-        <Button title={'Completed'} />
+        <Button onClick={() => changeFilter("all")} title={'All'} />
+        <Button onClick={() => changeFilter("active")} title={'Active'} />
+        <Button onClick={() => changeFilter("completed")} title={'Completed'} />
       </div>
       <div>{date}</div>
     </div>
