@@ -1,17 +1,18 @@
 import { ChangeEvent, KeyboardEvent, useState } from "react"
-import { FilterValuesType, TaskType } from "./App"
+import { FilterValuesType, TaskType, TodolistType } from "./App"
 import { Button } from "./Button"
 
 type PropsType = {
+  todolistId: string
   title: string
   tasks: TaskType[]
   filter: FilterValuesType
-  removeTask: (taskId: string) => void
-  changeFilter: (filter: FilterValuesType) => void
+  removeTask: (taskId: string, todolistId: string) => void
+  changeFilter: (todolistId: string, filter: FilterValuesType) => void
   addTask: (title: string) => void
   changeTaskStatus: (taskId: string, taskStatus: boolean) => void
 }
-export const Todolist = ({ title, tasks, filter, removeTask, changeFilter, addTask, changeTaskStatus }: PropsType
+export const Todolist = ({ todolistId, title, tasks, filter, removeTask, changeFilter, addTask, changeTaskStatus }: PropsType
 ) => {
   const [value, setValue] = useState<string>("")
   const [error, setError] = useState<string | null>(null)
@@ -26,7 +27,7 @@ export const Todolist = ({ title, tasks, filter, removeTask, changeFilter, addTa
   }
 
   const changeFilterTasksHandler = (filter: FilterValuesType) => {
-    changeFilter(filter)
+    changeFilter(todolistId, filter)
   }
 
   return (
@@ -53,7 +54,7 @@ export const Todolist = ({ title, tasks, filter, removeTask, changeFilter, addTa
         <ul>
           {tasks.map(task => {
             const removeTaskHandler = () => {
-              removeTask(task.id)
+              removeTask(task.id, todolistId)
             }
 
             const changeTaskStatusHandler = (e: ChangeEvent<HTMLInputElement>) => {
