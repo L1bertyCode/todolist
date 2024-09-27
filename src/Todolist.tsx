@@ -1,5 +1,5 @@
 import { ChangeEvent, KeyboardEvent, useState } from "react"
-import { FilterValuesType, TaskType, TodolistType } from "./App"
+import { FilterValuesType, TaskType } from "./App"
 import { Button } from "./Button"
 
 type PropsType = {
@@ -9,17 +9,18 @@ type PropsType = {
   filter: FilterValuesType
   removeTask: (taskId: string, todolistId: string) => void
   changeFilter: (todolistId: string, filter: FilterValuesType) => void
-  addTask: (title: string) => void
-  changeTaskStatus: (taskId: string, taskStatus: boolean) => void
+  addTask: (title: string, todolistId: string,) => void
+  changeTaskStatus: (taskId: string, taskStatus: boolean, todolistId: string) => void
+  removeTodolist: (todolistId: string) => void
 }
-export const Todolist = ({ todolistId, title, tasks, filter, removeTask, changeFilter, addTask, changeTaskStatus }: PropsType
+export const Todolist = ({ todolistId, title, tasks, filter, removeTask, changeFilter, addTask, changeTaskStatus, removeTodolist }: PropsType
 ) => {
   const [value, setValue] = useState<string>("")
   const [error, setError] = useState<string | null>(null)
 
   const addTaskHandler = () => {
     if (value.trim()) {
-      addTask(value)
+      addTask(value, todolistId)
       setValue("")
     } else {
       setError("Title is required")
@@ -30,9 +31,16 @@ export const Todolist = ({ todolistId, title, tasks, filter, removeTask, changeF
     changeFilter(todolistId, filter)
   }
 
+  const removeTodolistHandler = () => {
+    removeTodolist(todolistId)
+  }
+
   return (
     <div>
-      <h3>{title}</h3>
+      <div className={'todolist-title-container'}>
+        <h3>{title}</h3>
+        <Button title={'x'} onClick={removeTodolistHandler} />
+      </div>
       <div>
         <input
           className={error ? "error" : ""}
@@ -59,7 +67,7 @@ export const Todolist = ({ todolistId, title, tasks, filter, removeTask, changeF
 
             const changeTaskStatusHandler = (e: ChangeEvent<HTMLInputElement>) => {
               const neStatusValue = e.currentTarget.checked
-              changeTaskStatus(task.id, neStatusValue)
+              changeTaskStatus(task.id, neStatusValue, todolistId)
             }
             return (
 
