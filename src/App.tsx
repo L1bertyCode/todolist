@@ -2,6 +2,7 @@ import { useState } from 'react'
 import './App.css'
 import { Todolist } from './Todolist'
 import { v1 } from 'uuid'
+import { AddItemForm } from './AddItemForm'
 
 
 
@@ -66,12 +67,16 @@ function App() {
     setTodolists([...todolists.filter(tl => tl.id !== todolistId)])
     delete tasks[todolistId]
     setTasks({ ...tasks })
-    console.log(tasks);
-
   }
 
+  const addTodolist = (title: string) => {
+    const newId = v1()
+    setTodolists([{ id: newId, title, filter: "all" }, ...todolists])
+    setTasks({ [newId]: [], ...tasks })
+  }
   return (
     <div className="App">
+      <AddItemForm addItem={addTodolist} />
       {todolists.map(tl => {
         let tasksForTodolist = tasks[tl.id]
         if (tl.filter === "active") {
