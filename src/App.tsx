@@ -11,7 +11,12 @@ import MenuIcon from '@mui/icons-material/Menu'
 import Container from '@mui/material/Container'
 import { Grid2 } from '@mui/material'
 import Paper from '@mui/material/Paper'
+import { MenuButton } from './MenuButton'
+import { createTheme, ThemeProvider } from '@mui/material/styles';
+import Switch from '@mui/material/Switch'
+import CssBaseline from '@mui/material/CssBaseline'
 
+type ThemeMode = 'dark' | 'light'
 export type TaskType = {
   id: string
   title: string
@@ -26,7 +31,21 @@ export type TasksStateType = {
   [key: string]: TaskType[]
 }
 export type FilterValuesType = 'all' | 'active' | 'completed'
+
+
 function App() {
+  const [themeMode, setThemeMode] = useState<ThemeMode>('light')
+  const theme = createTheme({
+    palette: {
+      mode: themeMode === 'light' ? 'light' : 'dark',
+      primary: {
+        main: '#087EA4',
+      },
+    },
+  })
+  const changeModeHandler = () => {
+    setThemeMode(themeMode == 'light' ? 'dark' : 'light')
+  }
   let todolistID1 = v1()
   let todolistID2 = v1()
 
@@ -91,13 +110,18 @@ function App() {
     setTodolists([...todolists.map(tl => tl.id === todolistId ? { ...tl, title: title } : tl)])
   }
   return (
-    <div>
+    <ThemeProvider theme={theme}>
       <AppBar position="static" sx={{ mb: '30px' }}>
-        <Toolbar>
+        <Toolbar sx={{ display: 'flex', justifyContent: 'space-between' }}>
           <IconButton color="inherit">
             <MenuIcon />
           </IconButton>
-          <Button color="inherit">Login</Button>
+          <div>
+            <MenuButton>Login</MenuButton>
+            <MenuButton>Logout</MenuButton>
+            <MenuButton>Faq</MenuButton>
+            <Switch color={'default'} onChange={changeModeHandler} />
+          </div>
         </Toolbar>
       </AppBar>
       <Container fixed>
@@ -138,7 +162,7 @@ function App() {
         </Grid2>
       </Container >
 
-    </div >
+    </ThemeProvider>
   )
 }
 

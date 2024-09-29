@@ -9,6 +9,7 @@ import Checkbox from "@mui/material/Checkbox"
 import List from '@mui/material/List'
 import ListItem from '@mui/material/ListItem'
 import Box from "@mui/material/Box"
+import { filterButtonsContainerSx, getListItemSx } from './Todolist.styles'
 
 type PropsType = {
   todolistId: string
@@ -75,11 +76,7 @@ export const Todolist = ({ todolistId, title, tasks, filter, removeTask, changeF
               <ListItem
                 key={task.id}
                 className={task.isDone ? 'is-done' : ''}
-                sx={{
-                  p: 0,
-                  justifyContent: 'space-between',
-                  opacity: task.isDone ? 0.5 : 1,
-                }}
+                sx={getListItemSx(task.isDone)}
               >
                 <Checkbox checked={task.isDone} onChange={changeTaskStatusHandler} />
                 <EditableSpan onChange={changeTaskTitleHandler} value={task.title} />
@@ -91,8 +88,9 @@ export const Todolist = ({ todolistId, title, tasks, filter, removeTask, changeF
           }
 
           )}
-        </List>)}
-      <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
+        </List>)
+      }
+      <Box sx={filterButtonsContainerSx}>
         <Button
           variant={filter === 'all' ? 'outlined' : 'text'}
           color={'inherit'}
@@ -115,6 +113,6 @@ export const Todolist = ({ todolistId, title, tasks, filter, removeTask, changeF
           Completed
         </Button>
       </Box>
-    </div>
+    </div >
   )
 }
