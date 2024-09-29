@@ -9,7 +9,7 @@ import Button from '@mui/material/Button'
 import IconButton from '@mui/material/IconButton'
 import MenuIcon from '@mui/icons-material/Menu'
 import Container from '@mui/material/Container'
-import { Grid2 } from '@mui/material'
+import { Grid } from '@mui/material'
 import Paper from '@mui/material/Paper'
 import { MenuButton } from './MenuButton'
 import { createTheme, ThemeProvider } from '@mui/material/styles';
@@ -125,11 +125,13 @@ function App() {
         </Toolbar>
       </AppBar>
       <Container fixed>
-        <Grid2 container sx={{ mb: '30px' }}>
+        <Grid container sx={{ mb: '30px' }}>
           <AddItemForm addItem={addTodolist} />
-        </Grid2>
+        </Grid>
 
-        <Grid2 container spacing={4}>
+        <Grid container spacing={4} sx={{
+          display: 'flex'
+        }}>
           {todolists.map(tl => {
             let tasksForTodolist = tasks[tl.id]
             if (tl.filter === "active") {
@@ -139,7 +141,14 @@ function App() {
               tasksForTodolist = tasks[tl.id].filter(t => t.isDone)
             }
             return (
-              <Grid2 >
+              <Grid
+                key={tl.id}
+                sx={{
+                  mt: "20px",
+                  mr: "20px"
+
+                }}
+              >
                 <Paper sx={{ p: '0px 20px 20px 20px' }}>
                   <Todolist
                     key={tl.id}
@@ -156,10 +165,10 @@ function App() {
                     updateTodolist={updateTodolist}
                   />
                 </Paper>
-              </Grid2>
+              </Grid>
             )
           })}
-        </Grid2>
+        </Grid>
       </Container >
 
     </ThemeProvider>
