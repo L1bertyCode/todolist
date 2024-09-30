@@ -1,15 +1,16 @@
 import { ChangeEvent, KeyboardEvent, useState } from "react"
-import { FilterValuesType, TaskType } from "./App"
 import Button from '@mui/material/Button'
-import { AddItemForm } from "./AddItemForm"
-import { EditableSpan } from "./EditableSpan"
 import IconButton from '@mui/material/IconButton'
 import DeleteIcon from '@mui/icons-material/Delete'
 import Checkbox from "@mui/material/Checkbox"
 import List from '@mui/material/List'
 import ListItem from '@mui/material/ListItem'
 import Box from "@mui/material/Box"
-import { filterButtonsContainerSx, getListItemSx } from './Todolist.styles'
+import { FilterValuesType, TaskType } from "../App/App"
+import { EditableSpan } from "../EditableSpan"
+import { AddItemForm } from "../AddItemForm"
+import { filterButtonsContainerSx, getListItemSx } from "./Todolist.styles"
+
 
 type PropsType = {
   todolistId: string
