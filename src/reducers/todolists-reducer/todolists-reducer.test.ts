@@ -1,6 +1,6 @@
 import { v1 } from 'uuid'
 import { TodolistType } from '../../components/App/App'
-import { addTodolistAC, changeTodolistFilterC, changeTodolistTitleAC, removeTodolistAC, todolistsReducer } from './todolists-reducer'
+import { addTodolistAC, changeTodolistFilterAC, changeTodolistTitleAC, removeTodolistAC, todolistsReducer } from './todolists-reducer'
 
 test('correct todolist should be removed', () => {
   let todolistId1 = v1()
@@ -49,10 +49,10 @@ test('correct todolist should change its name', () => {
     },
   } as const
   const newTitle = 'New Todolist'
-  const endState = todolistsReducer(startState, changeTodolistTitleAC(newTitle, todolistId2))
+  const endState = todolistsReducer(startState, changeTodolistTitleAC(todolistId2, newTitle))
 
   expect(endState[0].title).toBe('What to learn')
-  expect(endState[1].title).toBe(action.payload.title)
+  expect(endState[1].title).toBe(newTitle)
 })
 test('correct filter of todolist should be changed', () => {
   let todolistId1 = v1()
@@ -65,7 +65,7 @@ test('correct filter of todolist should be changed', () => {
 
 
   const newFIlter = 'completed'
-  const endState = todolistsReducer(startState, changeTodolistFilterC(newFIlter, todolistId2))
+  const endState = todolistsReducer(startState, changeTodolistFilterAC(todolistId2, newFIlter))
 
   expect(endState[0].filter).toBe('all')
   expect(endState[1].filter).toBe(newFIlter)
