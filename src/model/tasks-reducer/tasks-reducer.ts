@@ -16,6 +16,13 @@ export const tasksReducer = (state: TasksStateType, action: ActionsType): TasksS
     case "CHANGE-TASK-TITLE": {
       return { ...state, [action.payload.todolistId]: [...state[action.payload.todolistId].map(tl => tl.id === action.payload.taskId ? { ...tl, title: action.payload.title } : tl)] }
     }
+    case "ADD-TODOLIST": {
+      return { ...state, [action.payload.todolistId]: [] }
+    }
+    case "REMOVE-TODOLIST": {
+      delete state[action.payload.todolistId]
+      return { ...state }
+    }
     default:
       throw new Error("I don't understand this type")
   }
@@ -49,6 +56,25 @@ export const changeTaskTitleAC = (payload: { taskId: string, title: string, todo
     payload: payload
   }
 }
+export const addTodolistAC = (title: string): AddTodolistActionType => {
+  return {
+    type: "ADD-TODOLIST",
+    payload: {
+      todolistId: v1(),
+      title: title
+    }
+
+  }
+}
+export const RemoveTodolistAC = (todolistId: string): RemoveTodolistActionType => {
+  return {
+    type: "REMOVE-TODOLIST",
+    payload: {
+      todolistId: todolistId
+    }
+  }
+}
+
 export type RemoveTaskActionType = {
   type: 'REMOVE-TASK'
   payload: {
@@ -80,5 +106,18 @@ type ChangeTaskTitleActionType = {
     todolistId: string
   }
 }
+type AddTodolistActionType = {
+  type: "ADD-TODOLIST"
+  payload: {
+    todolistId: string,
+    title: string
+  }
+}
+type RemoveTodolistActionType = {
+  type: "REMOVE-TODOLIST"
+  payload: {
+    todolistId: string,
+  }
+}
 type ActionsType = RemoveTaskActionType
-  | AddTaskActionType | ChangeTaskStatusActionType | ChangeTaskTitleActionType
+  | AddTaskActionType | ChangeTaskStatusActionType | ChangeTaskTitleActionType | AddTodolistActionType | RemoveTodolistActionType
