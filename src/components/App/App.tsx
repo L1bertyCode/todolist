@@ -15,7 +15,8 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Switch from '@mui/material/Switch'
 import { Todolist } from '../Todolist/Todolist'
 import { useReducer } from 'react'
-import { addTaskAC, removeTaskAC, tasksReducer } from '../../reducers/tasks-reducer/tasks-reducer'
+import { addTaskAC, AddTaskActionType, removeTaskAC, tasksReducer } from '../../model/tasks-reducer/tasks-reducer'
+
 
 
 
@@ -38,11 +39,18 @@ export type FilterValuesType = 'all' | 'active' | 'completed'
 
 
 function App() {
-  const [tasks, dispatch] = useReducer(tasksReducer, [
-    { id: v1(), title: 'HTML&CSS', isDone: true },
-    { id: v1(), title: 'JS', isDone: true },
-    { id: v1(), title: 'ReactJS', isDone: false },
-  ])
+  const [tasks, dispatch] = useReducer(tasksReducer, {
+    todolistId1: [
+      { id: '1', title: 'CSS', isDone: false },
+      { id: '2', title: 'JS', isDone: true },
+      { id: '3', title: 'React', isDone: false },
+    ],
+    todolistId2: [
+      { id: '1', title: 'bread', isDone: false },
+      { id: '2', title: 'milk', isDone: true },
+      { id: '3', title: 'tea', isDone: false },
+    ],
+  })
   const [themeMode, setThemeMode] = useState<ThemeMode>('light')
   const theme = createTheme({
     palette: {
@@ -74,12 +82,13 @@ function App() {
   //     { id: v1(), title: 'GraphQL', isDone: false },
   //   ],
   // })
-  const removeTask = (taskId: string) => {
-    dispatch(removeTaskAC(taskId))
+  const removeTask = (taskId: string, todolistId: string) => {
+    const payload = { taskId: taskId, todolistId: todolistId }
+    dispatch(removeTaskAC(payload))
   }
   const addTask = (title: string, todolistId: string) => {
-
-    dispatch(addTaskAC(title))
+    const payload = { title: title, todolistId: todolistId }
+    dispatch(addTaskAC(payload))
   }
 
   // const addTask = (title: string, todolistId: string) => {
@@ -171,7 +180,7 @@ function App() {
                     key={tl.id}
                     todolistId={tl.id}
                     title={tl.title}
-                    tasks={tasks}
+                    tasks={tasks["todolistId1"]}
                     removeTask={removeTask}
                     filter={tl.filter}
                     changeFilter={changeFilter}
