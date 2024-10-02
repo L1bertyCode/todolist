@@ -2,7 +2,7 @@ import { useState } from 'react'
 import './App.css'
 
 import { v1 } from 'uuid'
-import { AddItemForm } from '../AddItemForm'
+import { AddItemForm } from '../components/AddItemForm'
 import AppBar from '@mui/material/AppBar'
 import Toolbar from '@mui/material/Toolbar'
 import IconButton from '@mui/material/IconButton'
@@ -10,10 +10,10 @@ import MenuIcon from '@mui/icons-material/Menu'
 import Container from '@mui/material/Container'
 import { Grid } from '@mui/material'
 import Paper from '@mui/material/Paper'
-import { MenuButton } from '../MenuButton'
+import { MenuButton } from '../components/MenuButton'
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Switch from '@mui/material/Switch'
-import { Todolist } from '../Todolist/Todolist'
+import { Todolist } from '../components/Todolist/Todolist'
 
 
 

@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
-import AppWithReducers from './components/App/AppWithReducers';
+import AppWithReducers from './App/AppWithReducers';
 
 
 const root = ReactDOM.createRoot(

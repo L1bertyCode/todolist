@@ -1,4 +1,4 @@
-import { ChangeEvent, KeyboardEvent, useState } from "react"
+import { ChangeEvent } from "react"
 import Button from '@mui/material/Button'
 import IconButton from '@mui/material/IconButton'
 import DeleteIcon from '@mui/icons-material/Delete'
@@ -6,7 +6,7 @@ import Checkbox from "@mui/material/Checkbox"
 import List from '@mui/material/List'
 import ListItem from '@mui/material/ListItem'
 import Box from "@mui/material/Box"
-import { FilterValuesType, TaskType } from "../App/App"
+import { FilterValuesType, TaskType } from "../../App/App"
 import { EditableSpan } from "../EditableSpan"
 import { AddItemForm } from "../AddItemForm"
 import { filterButtonsContainerSx, getListItemSx } from "./Todolist.styles"
@@ -25,7 +25,7 @@ type PropsType = {
   updateTask: (todolistId: string, taskId: string, title: string) => void
   updateTodolist: (todolistId: string, title: string) => void
 }
-export const Todolist = ({ todolistId, title, tasks, filter, removeTask, changeFilter, addTask, changeTaskStatus, removeTodolist, updateTask, updateTodolist }: PropsType
+export const Todolist = ({ todolistId, title, tasks = [], filter, removeTask, changeFilter, addTask, changeTaskStatus, removeTodolist, updateTask, updateTodolist }: PropsType
 ) => {
 
   const addTaskCallback = (title: string) => {
