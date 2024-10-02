@@ -1,4 +1,3 @@
-// import { combineReducers, legacy_createStore } from 'redux'
 import { combineReducers, legacy_createStore } from 'redux'
 import { tasksReducer } from '../../model/tasks-reducer/tasks-reducer'
 import { todolistsReducer } from '../../model/todolists-reducer/todolists-reducer'

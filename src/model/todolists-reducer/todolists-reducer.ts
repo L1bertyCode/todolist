@@ -5,8 +5,7 @@ let todolistID1 = v1()
 let todolistID2 = v1()
 
 const initialState: TodolistType[] = [
-  { id: todolistID1, title: 'What to learn', filter: 'all' },
-  { id: todolistID2, title: 'What to buy', filter: 'all' },
+
 ]
 
 export const todolistsReducer = (state: TodolistType[] = initialState, action: ActionsType): TodolistType[] => {
@@ -24,7 +23,7 @@ export const todolistsReducer = (state: TodolistType[] = initialState, action: A
       return [...state.map(tl => tl.id === action.payload.todolistId ? { ...tl, filter: action.payload.filter } : tl)]
     }
     default:
-      throw new Error("I don't understand this type")
+      return state
   }
 }
 // Action creators
