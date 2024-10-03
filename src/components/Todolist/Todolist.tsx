@@ -100,6 +100,7 @@ export const Todolist = ({ todolistId, title, tasks = [], filter, removeTask, ch
           All
         </Button>
         <Button
+
           variant={filter === 'active' ? 'outlined' : 'text'}
           color={'primary'}
           onClick={() => changeFilterTasksHandler('active')}
@@ -107,6 +108,7 @@ export const Todolist = ({ todolistId, title, tasks = [], filter, removeTask, ch
           Active
         </Button>
         <Button
+
           variant={filter === 'completed' ? 'outlined' : 'text'}
           color={'secondary'}
           onClick={() => changeFilterTasksHandler('completed')}

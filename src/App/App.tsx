@@ -1,7 +1,5 @@
-import { useState } from 'react'
 import './App.css'
 
-import { v1 } from 'uuid'
 import { AddItemForm } from '../components/AddItemForm'
 import AppBar from '@mui/material/AppBar'
 import Toolbar from '@mui/material/Toolbar'
@@ -11,15 +9,20 @@ import Container from '@mui/material/Container'
 import { Grid } from '@mui/material'
 import Paper from '@mui/material/Paper'
 import { MenuButton } from '../components/MenuButton'
-import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { ThemeProvider } from '@mui/material/styles';
 import Switch from '@mui/material/Switch'
 import { Todolist } from '../components/Todolist/Todolist'
+import { addTaskAC, changeTaskStatusAC, changeTaskTitleAC, removeTaskAC } from '../model/tasks-reducer/tasks-reducer'
+import { addTodolistAC, changeTodolistFilterAC, changeTodolistTitleAC, removeTodolistAC } from '../model/todolists-reducer/todolists-reducer'
+import { useDispatch, useSelector } from 'react-redux'
+import { RootState } from './store/store'
+import { getTheme } from './theme'
+import { changeThemeAC, ThemeMode } from '../model/app-reducer/app-reducer'
 
 
 
 
 
-type ThemeMode = 'dark' | 'light'
 export type TaskType = {
   id: string
   title: string
@@ -37,84 +40,60 @@ export type TasksStateType = {
 export type FilterValuesType = 'all' | 'active' | 'completed'
 
 
+
+
 function App() {
+  const todolists = useSelector<RootState, TodolistType[]>(state => state.todolists)
+  const tasks = useSelector<RootState, TasksStateType>(state => state.tasks)
 
-  const [themeMode, setThemeMode] = useState<ThemeMode>('light')
-  const theme = createTheme({
-    palette: {
-      mode: themeMode === 'light' ? 'light' : 'dark',
-      primary: {
-        main: '#087EA4',
-      },
-    },
-  })
+  const themeMode = useSelector<RootState, ThemeMode>(state => state.app.themeMode)
+  const theme = getTheme(themeMode)
+  const dispatch = useDispatch()
+  // const [themeMode, setThemeMode] = useState<ThemeMode>('light')
+  // const theme = createTheme({
+  //   palette: {
+  //     mode: themeMode === 'light' ? 'light' : 'dark',
+  //     primary: {
+  //       main: '#087EA4',
+  //     },
+  //   },
+  // })
   const changeModeHandler = () => {
-    setThemeMode(themeMode == 'light' ? 'dark' : 'light')
+    dispatch(changeThemeAC(themeMode === 'light' ? 'dark' : 'light'))
   }
-  let todolistID1 = v1()
-  let todolistID2 = v1()
 
-  let [todolists, setTodolists] = useState<TodolistType[]>([
-    { id: todolistID1, title: 'What to learn', filter: 'all' },
-    { id: todolistID2, title: 'What to buy', filter: 'all' },
-  ])
-
-  let [tasks, setTasks] = useState<TasksStateType>({
-    [todolistID1]: [
-      { id: v1(), title: 'HTML&CSS', isDone: true },
-      { id: v1(), title: 'JS', isDone: true },
-      { id: v1(), title: 'ReactJS', isDone: false },
-    ],
-    [todolistID2]: [
-      { id: v1(), title: 'Rest API', isDone: true },
-      { id: v1(), title: 'GraphQL', isDone: false },
-    ],
-  })
-
+  const removeTask = (taskId: string, todolistId: string) => {
+    dispatch(removeTaskAC({ taskId, todolistId }))
+  }
 
   const addTask = (title: string, todolistId: string) => {
-
-    setTasks({ ...tasks, [todolistId]: [{ id: v1(), title, isDone: false }, ...tasks[todolistId]] })
+    dispatch(addTaskAC({ title, todolistId }))
   }
-  const removeTask = (taskId: string, todolistId: string) => {
-    const filteredTasks = tasks[todolistId].filter(task => {
-      return task.id !== taskId
-    })
-    setTasks({ ...tasks, [todolistId]: filteredTasks })
-  }
-
-  const changeFilter = (todolistId: string, filter: FilterValuesType) => {
-    setTodolists([...todolists.map(tl => tl.id === todolistId ? { ...tl, filter } : tl)])
-  }
-
 
   const changeTaskStatus = (taskId: string, taskStatus: boolean, todolistId: string) => {
-    // dispatch({
-    //   ...tasks,
-    //   [todolistId]: [...tasks[todolistId].map(t => t.id !== taskId ? t : { ...t, isDone: taskStatus })]
-    // })
-  }
-
-  const removeTodolist = (todolistId: string) => {
-    setTodolists([...todolists.filter(tl => tl.id !== todolistId)])
-    delete tasks[todolistId]
-    // dispatch({ ...tasks })
-  }
-
-  const addTodolist = (title: string) => {
-    const newId = v1()
-    setTodolists([{ id: newId, title, filter: "all" }, ...todolists])
-    // dispatch({ [newId]: [], ...tasks })
+    dispatch(changeTaskStatusAC({ taskId, isDone: taskStatus, todolistId }))
   }
 
   const updateTask = (todolistId: string, taskId: string, title: string) => {
-    // dispatch({
-    //   ...tasks, [todolistId]: [...tasks[todolistId].map(t => t.id === taskId ? { ...t, title: title } : t)]
-    // })
+    dispatch(changeTaskTitleAC({ taskId, title, todolistId }))
   }
 
-  const updateTodolist = (todolistId: string, title: string) => {
-    setTodolists([...todolists.map(tl => tl.id === todolistId ? { ...tl, title: title } : tl)])
+  const removeTodolist = (todolistId: string) => {
+    const action = removeTodolistAC(todolistId)
+    dispatch(action)
+  }
+
+  const addTodolist = (title: string) => {
+    const action = addTodolistAC(title)
+    dispatch(action)
+  }
+
+  const changeFilter = (id: string, filter: FilterValuesType) => {
+    dispatch(changeTodolistFilterAC(id, filter))
+  }
+
+  const updateTodolist = (id: string, title: string) => {
+    dispatch(changeTodolistTitleAC(id, title))
   }
   return (
     <ThemeProvider theme={theme}>
@@ -139,14 +118,15 @@ function App() {
         <Grid container spacing={4} sx={{
           display: 'flex'
         }}>
+
           {todolists.map(tl => {
-            // let tasksForTodolist = tasks[tl.id]
-            // if (tl.filter === "active") {
-            //   tasksForTodolist = tasks[tl.id].filter(t => !t.isDone)
-            // }
-            // if (tl.filter === "completed") {
-            //   tasksForTodolist = tasks[tl.id].filter(t => t.isDone)
-            // }
+            let tasksForTodolist = tasks[tl.id]
+            if (tl.filter === "active") {
+              tasksForTodolist = tasks[tl.id].filter(t => !t.isDone)
+            }
+            if (tl.filter === "completed") {
+              tasksForTodolist = tasks[tl.id].filter(t => t.isDone)
+            }
             return (
               <Grid
                 key={tl.id}
@@ -161,7 +141,7 @@ function App() {
                     key={tl.id}
                     todolistId={tl.id}
                     title={tl.title}
-                    tasks={tasks["todolistId1"]}
+                    tasks={tasksForTodolist}
                     removeTask={removeTask}
                     filter={tl.filter}
                     changeFilter={changeFilter}
