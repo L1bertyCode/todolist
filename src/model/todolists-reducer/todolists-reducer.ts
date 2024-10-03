@@ -1,4 +1,3 @@
-import { FilterValuesType, TodolistType } from '../../App/App'
 import { v1 } from 'uuid'
 
 
@@ -56,3 +55,10 @@ type ActionsType =
   | AddTodolistActionType
   | ChangeTodolistTitleActionType
   | ChangeTodolistFilterActionType
+export type TodolistType = {
+  id: string
+  title: string
+  filter: FilterValuesType
+}
+export type FilterValuesType = 'all' | 'active' | 'completed'
+

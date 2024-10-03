@@ -6,7 +6,8 @@ import Checkbox from "@mui/material/Checkbox"
 import List from '@mui/material/List'
 import ListItem from '@mui/material/ListItem'
 import Box from "@mui/material/Box"
-import { FilterValuesType, TaskType } from "../../App/App"
+import { TaskType } from '../../model/tasks-reducer/tasks-reducer'
+import { FilterValuesType } from "../../model/todolists-reducer/todolists-reducer"
 import { EditableSpan } from "../EditableSpan"
 import { AddItemForm } from "../AddItemForm"
 import { filterButtonsContainerSx, getListItemSx } from "./Todolist.styles"
@@ -32,7 +33,6 @@ export const Todolist = ({ todolistId, title, tasks = [], filter, removeTask, ch
     addTask(title, todolistId)
 
   }
-
   const changeFilterTasksHandler = (filter: FilterValuesType) => {
     changeFilter(todolistId, filter)
   }
@@ -53,7 +53,6 @@ export const Todolist = ({ todolistId, title, tasks = [], filter, removeTask, ch
         <IconButton onClick={removeTodolistHandler}>
           <DeleteIcon />
         </IconButton>
-
 
       </div>
       <AddItemForm addItem={addTaskCallback} />

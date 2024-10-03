@@ -1,4 +1,4 @@
-export type ThemeMode = 'dark' | 'light'
+import { ThemeMode } from "../../App/App"
 
 type InitialState = typeof initialState
 
