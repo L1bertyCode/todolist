@@ -1,82 +1,34 @@
-import { ChangeEvent } from "react"
-import IconButton from '@mui/material/IconButton'
-import DeleteIcon from '@mui/icons-material/Delete'
-import Checkbox from "@mui/material/Checkbox"
-import List from '@mui/material/List'
-import ListItem from '@mui/material/ListItem'
-import { TaskType } from '../../model/tasks-reducer/tasks-reducer'
-import { FilterValuesType, TodolistType } from "../../model/todolists-reducer/todolists-reducer"
-import { EditableSpan } from "../EditableSpan"
-import { AddItemForm } from "../AddItemForm"
-import { getListItemSx } from "./Todolist.styles"
-import { TodolistTitle } from "../TodolistTitle/TodolistTitle"
-import FilterTasksButtons from "../FilterTasksButtons/FilterTasksButtons"
+
+import { addTaskAC, TaskType } from '../../model/tasks-reducer/tasks-reducer';
+import { TodolistType } from "../../model/todolists-reducer/todolists-reducer";
+import { AddItemForm } from "../AddItemForm";
+import { TodolistTitle } from "../TodolistTitle/TodolistTitle";
+import FilterTasksButtons from "../FilterTasksButtons/FilterTasksButtons";
+import Tasks from "../Tasks/Tasks";
+import { useDispatch } from 'react-redux';
 
 
 type TodolistProps = {
-  todolist: TodolistType
+  todolist: TodolistType;
 
-  tasks: TaskType[]
-  removeTask: (taskId: string, todolistId: string) => void
-  addTask: (title: string, todolistId: string,) => void
-  changeTaskStatus: (taskId: string, taskStatus: boolean, todolistId: string) => void
-  removeTodolist: (todolistId: string) => void
-  updateTask: (todolistId: string, taskId: string, title: string) => void
-  updateTodolist: (todolistId: string, title: string) => void
-}
-export const Todolist = ({ todolist, tasks = [], removeTask, addTask, changeTaskStatus, removeTodolist, updateTask, updateTodolist }: TodolistProps
+};
+
+export const Todolist = ({ todolist }: TodolistProps
 ) => {
-  const { id: todolistId, title, filter } = todolist
+  const { id: todolistId, title } = todolist;
+  const dispatch = useDispatch();
+  const addTask = (title: string, todolistId: string) => {
+    dispatch(addTaskAC({ title, todolistId }));
+  };
   const addTaskCallback = (title: string) => {
-    addTask(title, todolistId)
-
-  }
+    dispatch(addTaskAC({ title, todolistId: todolist.id }));
+  };
   return (
     <div>
-      <TodolistTitle
-        updateTodolist={updateTodolist}
-        removeTodolist={removeTodolist}
-        todolistId={todolistId}
-        title={title}
-      />
+      <TodolistTitle todolist={todolist} />
       <AddItemForm addItem={addTaskCallback} />
-      {tasks.length === 0 ? (
-        <p>Тасок нет</p>
-      ) : (
-        <List>
-          {tasks.map(task => {
-            const removeTaskHandler = () => {
-              removeTask(task.id, todolistId)
-            }
-
-            const changeTaskStatusHandler = (e: ChangeEvent<HTMLInputElement>) => {
-              const neStatusValue = e.currentTarget.checked
-              changeTaskStatus(task.id, neStatusValue, todolistId)
-            }
-            const changeTaskTitleHandler = (title: string) => {
-              updateTask(todolistId, task.id, title)
-            }
-            return (
-              <ListItem
-                key={task.id}
-                className={task.isDone ? 'is-done' : ''}
-                sx={getListItemSx(task.isDone)}
-              >
-                <Checkbox checked={task.isDone} onChange={changeTaskStatusHandler} />
-                <EditableSpan onChange={changeTaskTitleHandler} value={task.title} />
-                <IconButton onClick={removeTaskHandler}>
-                  <DeleteIcon />
-                </IconButton>
-              </ListItem>
-            )
-          }
-
-          )}
-        </List>)
-      }
-      <FilterTasksButtons
-        todolist={todolist}
-      />
+      <Tasks todolist={todolist} />
+      <FilterTasksButtons todolist={todolist} />
     </div >
-  )
-}
+  );
+};

@@ -1,26 +1,27 @@
-import { EditableSpan } from "../EditableSpan"
-import IconButton from '@mui/material/IconButton'
-import DeleteIcon from '@mui/icons-material/Delete'
+import { EditableSpan } from "../EditableSpan";
+import IconButton from '@mui/material/IconButton';
+import DeleteIcon from '@mui/icons-material/Delete';
+import { useDispatch } from "react-redux";
+import { changeTodolistTitleAC, removeTodolistAC, TodolistType } from "../../model/todolists-reducer/todolists-reducer";
 
 type TodolistTitleProps = {
-  title: string
-  todolistId: string
-  updateTodolist: (todolistId: string, title: string) => void
-  removeTodolist: (todolistId: string) => void
-}
+  todolist: TodolistType;
+};
 
-export const TodolistTitle = ({ updateTodolist, removeTodolist, title, todolistId }: TodolistTitleProps) => {
-  const changeTaskTitleHandler = (title: string) => {
-    updateTodolist(todolistId, title)
-  }
+export const TodolistTitle = ({ todolist }: TodolistTitleProps) => {
+  const dispatch = useDispatch();
+  const { title, id: todolistId } = todolist;
+  const changeTodolistHandler = (title: string) => {
+    dispatch(changeTodolistTitleAC(todolistId, title));
+  };
   const removeTodolistHandler = () => {
-    removeTodolist(todolistId)
-  }
+    dispatch(removeTodolistAC(todolistId));
+  };
   return (
     <h3>
       <div className={'todolist-title-container'}>
         <h3>
-          <EditableSpan onChange={changeTaskTitleHandler} value={title} />
+          <EditableSpan onChange={changeTodolistHandler} value={title} />
         </h3>
         <IconButton onClick={removeTodolistHandler}>
           <DeleteIcon />
@@ -28,5 +29,5 @@ export const TodolistTitle = ({ updateTodolist, removeTodolist, title, todolistI
 
       </div>
     </h3>
-  )
-}
+  );
+};
