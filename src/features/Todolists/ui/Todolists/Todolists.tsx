@@ -1,16 +1,15 @@
 import { useSelector } from "react-redux";
-import { RootState } from "../../App/store/store";
+import { RootState } from "../../../../App/store/store";
 
 import { Grid } from '@mui/material';
 import Paper from '@mui/material/Paper';
 
-import { TodolistType } from "../../model/todolists-reducer/todolists-reducer";
-import { TasksStateType } from "../../model/tasks-reducer/tasks-reducer";
+import { TodolistType } from "../../../../model/todolists-reducer/todolists-reducer";
+
 import { Todolist } from "../Todolist/Todolist";
 
 const Todolists = () => {
   const todolists = useSelector<RootState, TodolistType[]>(state => state.todolists);
-  const tasks = useSelector<RootState, TasksStateType>(state => state.tasks);
   return (
     <>{todolists.map(tl => {
 

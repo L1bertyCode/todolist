@@ -1,20 +1,20 @@
-import { useSelector } from 'react-redux'
-import { RootState } from './store/store'
+import { useSelector } from 'react-redux';
+import { RootState } from './store/store';
 
-import { Header } from '../components/Header/Header'
-import Main from '../components/Main/Main'
+import { Header } from '../common/components/Header/Header';
+import Main from './Main/Main';
 
-import { getTheme } from './theme'
+import { getTheme } from './theme';
 import { ThemeProvider } from '@mui/material/styles';
-import './App.css'
-import { CssBaseline } from '@mui/material'
+import './App.css';
+import { CssBaseline } from '@mui/material';
 
 
 
-export type ThemeMode = 'dark' | 'light'
+export type ThemeMode = 'dark' | 'light';
 
 const App = () => {
-  const themeMode = useSelector<RootState, ThemeMode>(state => state.app.themeMode)
+  const themeMode = useSelector<RootState, ThemeMode>(state => state.app.themeMode);
   return (
     <ThemeProvider theme={getTheme(themeMode)}>
       <CssBaseline />
@@ -22,7 +22,7 @@ const App = () => {
       <Main />
 
     </ThemeProvider>
-  )
-}
+  );
+};
 
-export default App
+export default App;
