@@ -4,10 +4,10 @@ import { EditableSpan } from "../../../../common/components/EditableSpan/Editabl
 import Checkbox from "@mui/material/Checkbox";
 import IconButton from '@mui/material/IconButton';
 import DeleteIcon from '@mui/icons-material/Delete';
-import { useDispatch } from "react-redux";
-import { changeTaskStatusAC, changeTaskTitleAC, removeTaskAC, TaskType } from "../../../../model/tasks-reducer/tasks-reducer";
+import { changeTaskStatusAC, changeTaskTitleAC, removeTaskAC, TaskType } from "../../model/tasks-reducer/tasks-reducer";
 import { ChangeEvent } from "react";
-import { TodolistType } from "../../../../model/todolists-reducer/todolists-reducer";
+import { TodolistType } from "../../model/todolists-reducer/todolists-reducer";
+import { useAppDispatch } from "../../../../common/hooks/useAppDispatch";
 
 
 type TaskProps = {
@@ -16,7 +16,7 @@ type TaskProps = {
 };
 
 export const Task = ({ task, todolist }: TaskProps) => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   const removeTaskHandler = () => {
     dispatch(removeTaskAC({ taskId: task.id, todolistId: todolist.id }));

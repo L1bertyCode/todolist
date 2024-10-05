@@ -1,4 +1,3 @@
-import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../App/store/store";
 
 import { MenuButton } from "../MenuButton/MenuButton";
@@ -7,18 +6,20 @@ import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import Switch from '@mui/material/Switch';
 
-import { changeThemeAC } from "../../../model/app-reducer/app-reducer";
 
 import { getTheme } from "../../../App/theme";
-import { ThemeMode } from "../../../App/App";
 
 import MenuIcon from '@mui/icons-material/Menu';
 import IconButton from '@mui/material/IconButton';
+import { changeThemeAC } from "../../../App/app-reducer/app-reducer";
+import { selectThemeMode } from "../../../App/appSelectors";
+import { useAppSelector } from "../../hooks/useAppSelector";
+import { useAppDispatch } from "../../hooks/useAppDispatch";
 
 export const Header = () => {
-  const themeMode = useSelector<RootState, ThemeMode>(state => state.app.themeMode);
+  const themeMode = useAppSelector(selectThemeMode);
 
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   const theme = getTheme(themeMode);
 
