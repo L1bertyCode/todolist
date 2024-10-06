@@ -23,6 +23,20 @@ type CreateTodolistResponse = {
   };
 };
 
+type DeleteTodolistResponse = {
+  data: {};
+  fieldsErrors: FieldError[];
+  messages: string[];
+  resultCode: number;
+
+};
+type UpdateTodolistResponse = {
+  data: {};
+  fieldsErrors: FieldError[];
+  messages: string[];
+  resultCode: number;
+
+};
 export const AppHttpRequests = () => {
   const [todolists, setTodolists] = useState<Todolist[]>([]);
   const [tasks, setTasks] = useState<any>({});
@@ -30,8 +44,8 @@ export const AppHttpRequests = () => {
   const instance = axios.create(
     {
       headers: {
-        'API-KEY': '------------------------------------------------',
-        Authorization: 'Bearer -----------------------------------'
+        'API-KEY': '----------------------------------------------',
+        Authorization: 'Bearer ----------------------------------'
       }
     }
   );
@@ -57,11 +71,22 @@ export const AppHttpRequests = () => {
   };
 
   const removeTodolistHandler = (id: string) => {
-    // remove todolist
+    instance
+      .delete<DeleteTodolistResponse>(`https://social-network.samuraijs.com/api/1.1/todo-lists/${id}`)
+      .then(res => {
+        setTodolists([...todolists.filter(tl => tl.id !== id)]);
+      });
   };
 
   const updateTodolistHandler = (id: string, title: string) => {
-    // update todolist title
+    instance
+      .put<UpdateTodolistResponse>(
+        `https://social-network.samuraijs.com/api/1.1/todo-lists/${id}`,
+        { title }
+      )
+      .then(res => {
+        setTodolists([...todolists.map(tl => tl.id === id ? { ...tl, title } : tl)]);
+      });
   };
 
   const createTaskHandler = (title: string, todolistId: string) => {
