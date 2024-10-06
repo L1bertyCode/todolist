@@ -1,9 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
-import { Provider } from 'react-redux'
+import { Provider } from 'react-redux';
 import { store } from './App/store/store';
 import App from './App/App';
+import { AppHttpRequests } from './App/AppHttpRequests';
 
 
 
@@ -13,7 +14,8 @@ const root = ReactDOM.createRoot(
 root.render(
   <React.StrictMode>
     <Provider store={store}>
-      <App />
+      {/* <App /> */}
+      <AppHttpRequests />
     </Provider>
   </React.StrictMode>
 );
