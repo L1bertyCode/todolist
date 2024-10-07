@@ -59,7 +59,6 @@ export type GetTasksResponse = {
 };
 
 type CreateTaskResponse = {
-
   resultCode: number;
   messages: string[];
   data: {
@@ -68,7 +67,12 @@ type CreateTaskResponse = {
 };
 
 type UpdateTaskModel = {
-
+  status: number;
+  title: string,
+  deadline: string,
+  description: string,
+  priority: number,
+  startDate: string,
 };
 
 type UpdateTaskResponse = {
@@ -79,6 +83,13 @@ type UpdateTaskResponse = {
     item: DomainTask;
   };
 
+};
+
+type DeleteTaskResponse = {
+  data: {};
+  fieldsErrors: FieldError[];
+  messages: string[];
+  resultCode: number;
 };
 
 export const AppHttpRequests = () => {
@@ -119,8 +130,9 @@ export const AppHttpRequests = () => {
       .then(res => {
         const newTodolist = res.data.data.item;
         setTodolists([newTodolist, ...todolists]);
-        setTasks({ ...tasks, [newTodolist.id]: [] });
+        // setTasks({ ...tasks, [newTodolist.id]: [] });
       });
+
   };
 
   const removeTodolistHandler = (id: string) => {
@@ -128,6 +140,8 @@ export const AppHttpRequests = () => {
       .delete<DeleteTodolistResponse>(`https://social-network.samuraijs.com/api/1.1/todo-lists/${id}`)
       .then(res => {
         setTodolists([...todolists.filter(tl => tl.id !== id)]);
+        // delete tasks[id];
+        // setTasks({ ...tasks });
       });
   };
 
@@ -154,6 +168,10 @@ export const AppHttpRequests = () => {
 
   const removeTaskHandler = (taskId: string, todolistId: string) => {
     // remove task
+    instance.delete<DeleteTaskResponse>(`https://social-network.samuraijs.com/api/1.1/todo-lists/${todolistId}/tasks/${taskId}`)
+      .then(res => {
+        setTasks({ ...tasks, [todolistId]: [...tasks[todolistId].filter(t => t.id !== taskId)] });
+      });
   };
 
   const changeTaskStatusHandler = (e: ChangeEvent<HTMLInputElement>, task: DomainTask) => {
@@ -179,8 +197,19 @@ export const AppHttpRequests = () => {
       });
   };
 
-  const changeTaskTitleHandler = (title: string, task: any) => {
-    // update task title
+  const changeTaskTitleHandler = (title: string, task: DomainTask) => {
+    const model: UpdateTaskModel = {
+      status: task.status,
+      title,
+      deadline: task.deadline,
+      description: task.description,
+      priority: task.priority,
+      startDate: task.startDate
+    };
+    instance.put<UpdateTaskResponse>(`https://social-network.samuraijs.com/api/1.1/todo-lists/${task.todoListId}/tasks/${task.id}`, model)
+      .then(res => {
+        setTasks({ ...tasks, [task.todoListId]: [...tasks[task.todoListId].map(t => t.id === task.id ? { ...t, ...model } : t)] });
+      });
   };
 
   return (
