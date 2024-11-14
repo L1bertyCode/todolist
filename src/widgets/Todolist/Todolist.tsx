@@ -1,9 +1,17 @@
-import React from 'react';
 
-export const Todolist = () => {
+interface TodolistProps {
+  title: string;
+  subTitle?: string;
+  description?: string;
+  tasks?: any[];
+}
+export const Todolist = ({ title, subTitle, description, tasks }: TodolistProps) => {
   return (
     <div>
-      <h3>What to learn</h3>
+      <h3>{title}</h3>
+      <h4>{subTitle}</h4>
+      <p>{description}</p>
+      {tasks && <div>{tasks.map(t => t.title)}</div>}
       <div>
         <input />
         <button>+</button>
