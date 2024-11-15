@@ -6,9 +6,10 @@ interface AppButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   children: ReactNode;
 };
 
-export const AppButton = ({ children }: AppButtonProps) => {
+export const AppButton = ({ children, ...otherProps }: AppButtonProps) => {
   return (
-    <button className={s.appButton}>
+    <button
+      {...otherProps} className={s.appButton}>
       {children}
     </button>
   );
