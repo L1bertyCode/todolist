@@ -1,7 +1,7 @@
 import { Todolist } from "@/widgets/Todolist/Todolist";
 import s from "./App.module.css";
-type TaskType = {
-  id: string;
+export type TaskType = {
+  id: number;
   title: string;
   isDone: boolean;
 };

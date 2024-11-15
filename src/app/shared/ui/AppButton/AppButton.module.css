@@ -1,0 +1,12 @@
+.appButton {
+  border: none;
+  background: none;
+
+  padding: 8px 12px;
+
+  cursor: pointer;
+}
+
+.appButton:hover {
+  color: blue;
+}

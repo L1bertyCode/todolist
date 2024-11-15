@@ -1,9 +1,11 @@
+import { TaskType } from "@/app/App/App";
+import { AppButton } from "@/app/shared/ui/AppButton/AppButton";
 
 interface TodolistProps {
   title: string;
   subTitle?: string;
   description?: string;
-  tasks?: any[];
+  tasks?: TaskType[];
 }
 export const Todolist = ({ title, subTitle, description, tasks }: TodolistProps) => {
   return (
@@ -11,26 +13,16 @@ export const Todolist = ({ title, subTitle, description, tasks }: TodolistProps)
       <h3>{title}</h3>
       <h4>{subTitle}</h4>
       <p>{description}</p>
-      {tasks && <div>{tasks.map(t => t.title)}</div>}
+
       <div>
         <input />
         <button>+</button>
       </div>
-      <ul>
-        <li>
-          <input type="checkbox" checked={true} /> <span>HTML&CSS</span>
-        </li>
-        <li>
-          <input type="checkbox" checked={true} /> <span>JS</span>
-        </li>
-        <li>
-          <input type="checkbox" checked={false} /> <span>React</span>
-        </li>
-      </ul>
+      {tasks ? <ul>{tasks.map(t => <li key={t.id}>{t.title}</li>)}</ul> : <div>{"Tasks not found"}</div>}
       <div>
-        <button>All</button>
-        <button>Active</button>
-        <button>Completed</button>
+        <AppButton>All</AppButton>
+        <AppButton>Active</AppButton>
+        <AppButton>Completed</AppButton>
       </div>
     </div>
   );
