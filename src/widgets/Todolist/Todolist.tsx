@@ -1,5 +1,6 @@
 import { FilterType, TaskType } from "@/app/App/App";
 import { AppButton } from "@/app/shared/ui/AppButton/AppButton";
+import { ChangeEvent, KeyboardEvent, useState } from "react";
 
 interface TodolistProps {
   title: string;
@@ -8,6 +9,7 @@ interface TodolistProps {
   tasks?: TaskType[];
   removeTask: (id: string) => void;
   changeFilter: (filter: FilterType) => void;
+  addTask: (task: string) => void;
 }
 export const Todolist = ({
   title,
@@ -15,16 +17,35 @@ export const Todolist = ({
   description,
   tasks,
   removeTask,
-  changeFilter
+  changeFilter,
+  addTask
 }: TodolistProps) => {
+  const [value, setValue] = useState<string>("");
+  const [error, setError] = useState("");
+  const addTaskHandler = () => {
+    if (value) {
+      setError("");
+      addTask(value);
+      setValue("");
+    }
+    setError("Field is requred");
+  };
+
   return (
     <div>
       <h3>{title}</h3>
       <h4>{subTitle}</h4>
       <p>{description}</p>
       <div>
-        <input />
-        <button>+</button>
+        <input
+          value={value} onChange={(e: ChangeEvent<HTMLInputElement>) => setValue(e.currentTarget.value)}
+          onKeyUp={(e: KeyboardEvent<HTMLInputElement>) => {
+            if (e.key === "Enter") {
+              addTaskHandler();
+            }
+          }}
+        />
+        <AppButton onClick={addTaskHandler}>+</AppButton>
       </div>
       {tasks ? <ul>{tasks.map(t => <li key={t.id}>
         <input type="checkbox" checked={t.isDone} />
