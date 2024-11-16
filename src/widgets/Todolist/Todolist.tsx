@@ -1,4 +1,4 @@
-import { TaskType } from "@/app/App/App";
+import { FilterType, TaskType } from "@/app/App/App";
 import { AppButton } from "@/app/shared/ui/AppButton/AppButton";
 
 interface TodolistProps {
@@ -7,13 +7,15 @@ interface TodolistProps {
   description?: string;
   tasks?: TaskType[];
   removeTask: (id: string) => void;
+  changeFilter: (filter: FilterType) => void;
 }
 export const Todolist = ({
   title,
   subTitle,
   description,
   tasks,
-  removeTask
+  removeTask,
+  changeFilter
 }: TodolistProps) => {
   return (
     <div>
@@ -30,9 +32,9 @@ export const Todolist = ({
         <AppButton onClick={() => removeTask(t.id)}>x</AppButton>
       </li>)}</ul> : <div>{"Tasks not found"}</div>}
       <div>
-        <AppButton>All</AppButton>
-        <AppButton>Active</AppButton>
-        <AppButton>Completed</AppButton>
+        <AppButton onClick={() => changeFilter("all")}>All</AppButton>
+        <AppButton onClick={() => changeFilter("active")}>Active</AppButton>
+        <AppButton onClick={() => changeFilter("completed")}>Completed</AppButton>
       </div>
     </div>
   );
