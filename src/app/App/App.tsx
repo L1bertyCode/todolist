@@ -24,8 +24,6 @@ export const App = ({ }: AppProps) => {
   };
 
   const changeFilter = (filter: FilterType) => {
-    console.log("filter", filter);
-
     setFilter(filter);
   };
   let tasksForTodolist = tasks;
@@ -40,13 +38,18 @@ export const App = ({ }: AppProps) => {
   const addTask = (title: string) => {
     setTasks([...tasks, { id: v1(), title: title, isDone: false }]);
   };
+  const changeTaskStatus = (taskId: string, status: boolean) => {
+    setTasks([...tasks.map(t => t.id === taskId ? { ...t, isDone: status } : t)]);
+  };
   return (
     <div className={s.app}>
       <Todolist
         title="Want to learn" tasks={tasksForTodolist}
         removeTask={removeTask}
+        filter={filter}
         changeFilter={changeFilter}
         addTask={addTask}
+        changeTaskStatus={changeTaskStatus}
       />
     </div>
   );
