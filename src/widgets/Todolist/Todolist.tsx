@@ -10,7 +10,8 @@ interface TodolistProps {
   subTitle?: string;
   description?: string;
   tasks?: TaskType[];
-  removeTask: (id: string) => void;
+  todolistId: string;
+  removeTask: (todolistId: string, taskId: string) => void;
   filter: FilterType;
   changeFilter: (filter: FilterType) => void;
   addTask: (task: string) => void;
@@ -21,6 +22,7 @@ export const Todolist = ({
   subTitle,
   description,
   tasks,
+  todolistId,
   removeTask,
   filter,
   changeFilter,
@@ -67,7 +69,7 @@ export const Todolist = ({
           onChange={(e: ChangeEvent<HTMLInputElement>) => changeTaskStatus(t.id, e.currentTarget.checked)}
         />
         <span>{t.title}</span>
-        <AppButton onClick={() => removeTask(t.id)}>x</AppButton>
+        <AppButton onClick={() => removeTask(todolistId, t.id)}>x</AppButton>
       </li>)}</ul> : <div>{"Tasks not found"}</div>}
       <div>
         <AppButton className={cn(filter === "all" && s["active-filter"])} onClick={() => changeFilter("all")}>All</AppButton>
