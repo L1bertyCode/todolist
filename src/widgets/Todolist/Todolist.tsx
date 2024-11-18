@@ -14,8 +14,8 @@ interface TodolistProps {
   removeTask: (todolistId: string, taskId: string) => void;
   filter: FilterType;
   changeFilter: (filter: FilterType, todolistId: string) => void;
-  addTask: (task: string) => void;
-  changeTaskStatus: (taskId: string, status: boolean) => void;
+  addTask: (todolistId: string, task: string) => void;
+  changeTaskStatus: (todolistId: string, taskId: string, status: boolean) => void;
 }
 export const Todolist = ({
   title,
@@ -35,7 +35,7 @@ export const Todolist = ({
   const addTaskHandler = () => {
     if (value) {
       setError("");
-      addTask(value);
+      addTask(todolistId, value);
       setValue("");
     } else {
       setError("Field is requred");
@@ -66,7 +66,7 @@ export const Todolist = ({
       >
         <input
           type="checkbox" checked={t.isDone}
-          onChange={(e: ChangeEvent<HTMLInputElement>) => changeTaskStatus(t.id, e.currentTarget.checked)}
+          onChange={(e: ChangeEvent<HTMLInputElement>) => changeTaskStatus(todolistId, t.id, e.currentTarget.checked)}
         />
         <span>{t.title}</span>
         <AppButton onClick={() => removeTask(todolistId, t.id)}>x</AppButton>

@@ -50,12 +50,13 @@ export const App = ({ }: AppProps) => {
     setTodolists([...todolists.map(tl => tl.id === todolistId ? { ...tl, filter } : tl)]);
   };
 
-  const addTask = (title: string) => {
-    // setTasks([...tasks, { id: v1(), title: title, isDone: false }]);
+  const addTask = (todolistId: string, title: string) => {
+
+    setTasks({ ...tasks, [todolistId]: [...tasks[todolistId], { id: v1(), title, isDone: false }] });
   };
 
-  const changeTaskStatus = (taskId: string, status: boolean) => {
-    // setTasks([...tasks.map(t => t.id === taskId ? { ...t, isDone: status } : t)]);
+  const changeTaskStatus = (todolistId: string, taskId: string, status: boolean) => {
+    setTasks({ ...tasks, [todolistId]: [...tasks[todolistId].map(t => t.id === taskId ? { ...t, isDone: status } : t)] });
   };
 
   return (
