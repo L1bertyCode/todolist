@@ -18,12 +18,12 @@ type TodolistType = {
 interface AppProps { };
 
 export const App = ({ }: AppProps) => {
-  const [filter, setFilter] = useState<FilterType>("all");
+
 
 
   const todolistID1 = v1();
   const todolistID2 = v1();
-  
+
   const [todolists, setTodolists] = useState<TodolistType[]>([
     { id: todolistID1, title: "What to learn", filter: "all" },
     { id: todolistID2, title: "What to buy", filter: "all" }
@@ -46,8 +46,8 @@ export const App = ({ }: AppProps) => {
     setTasks({ ...tasks, [todolistId]: [...tasks[todolistId].filter(t => t.id !== taskId)] });
   };
 
-  const changeFilter = (filter: FilterType) => {
-    setFilter(filter);
+  const changeFilter = (filter: FilterType, todolistId: string) => {
+    setTodolists([...todolists.map(tl => tl.id === todolistId ? { ...tl, filter } : tl)]);
   };
 
   const addTask = (title: string) => {
@@ -65,11 +65,11 @@ export const App = ({ }: AppProps) => {
           let tasksForTodolist = tasks[tl.id];
           console.log("tasksForTodolist", tasksForTodolist);
 
-          if (filter === 'active') {
-            // tasksForTodolist = tasks.filter(t => !t.isDone);
+          if (tl.filter === 'active') {
+            tasksForTodolist = tasks[tl.id].filter(t => !t.isDone);
           }
-          if (filter === "completed") {
-            // tasksForTodolist = tasks.filter(t => t.isDone);
+          if (tl.filter === "completed") {
+            tasksForTodolist = tasks[tl.id].filter(t => t.isDone);
           }
           return (
             <Todolist
@@ -77,7 +77,7 @@ export const App = ({ }: AppProps) => {
               title="Want to learn" tasks={tasksForTodolist}
               todolistId={tl.id}
               removeTask={removeTask}
-              filter={filter}
+              filter={tl.filter}
               changeFilter={changeFilter}
               addTask={addTask}
               changeTaskStatus={changeTaskStatus}

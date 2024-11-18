@@ -13,7 +13,7 @@ interface TodolistProps {
   todolistId: string;
   removeTask: (todolistId: string, taskId: string) => void;
   filter: FilterType;
-  changeFilter: (filter: FilterType) => void;
+  changeFilter: (filter: FilterType, todolistId: string) => void;
   addTask: (task: string) => void;
   changeTaskStatus: (taskId: string, status: boolean) => void;
 }
@@ -72,9 +72,9 @@ export const Todolist = ({
         <AppButton onClick={() => removeTask(todolistId, t.id)}>x</AppButton>
       </li>)}</ul> : <div>{"Tasks not found"}</div>}
       <div>
-        <AppButton className={cn(filter === "all" && s["active-filter"])} onClick={() => changeFilter("all")}>All</AppButton>
-        <AppButton className={cn(filter === "active" && s["active-filter"])} onClick={() => changeFilter("active")}>Active</AppButton>
-        <AppButton className={cn(filter === "completed" && s["active-filter"])} onClick={() => changeFilter("completed")}>Completed</AppButton>
+        <AppButton className={cn(filter === "all" && s["active-filter"])} onClick={() => changeFilter("all", todolistId)}>All</AppButton>
+        <AppButton className={cn(filter === "active" && s["active-filter"])} onClick={() => changeFilter("active", todolistId)}>Active</AppButton>
+        <AppButton className={cn(filter === "completed" && s["active-filter"])} onClick={() => changeFilter("completed", todolistId)}>Completed</AppButton>
       </div>
     </div>
   );
