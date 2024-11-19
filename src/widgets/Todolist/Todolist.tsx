@@ -16,6 +16,7 @@ interface TodolistProps {
   changeFilter: (filter: FilterType, todolistId: string) => void;
   addTask: (todolistId: string, task: string) => void;
   changeTaskStatus: (todolistId: string, taskId: string, status: boolean) => void;
+  removeTodolist: (todolistId: string,) => void;
 }
 export const Todolist = ({
   title,
@@ -27,7 +28,7 @@ export const Todolist = ({
   filter,
   changeFilter,
   addTask,
-  changeTaskStatus
+  changeTaskStatus, removeTodolist
 }: TodolistProps) => {
   const [value, setValue] = useState<string>("");
   const [error, setError] = useState("");
@@ -44,7 +45,9 @@ export const Todolist = ({
   };
   return (
     <div>
-      <h3>{title}</h3>
+      <div className={s.tl}>
+        <h3>{title}</h3> <AppButton onClick={() => removeTodolist(todolistId)}>x</AppButton>
+      </div>
       <h4>{subTitle}</h4>
       <p>{description}</p>
       <div>

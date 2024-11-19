@@ -51,7 +51,6 @@ export const App = ({ }: AppProps) => {
   };
 
   const addTask = (todolistId: string, title: string) => {
-
     setTasks({ ...tasks, [todolistId]: [...tasks[todolistId], { id: v1(), title, isDone: false }] });
   };
 
@@ -59,12 +58,17 @@ export const App = ({ }: AppProps) => {
     setTasks({ ...tasks, [todolistId]: [...tasks[todolistId].map(t => t.id === taskId ? { ...t, isDone: status } : t)] });
   };
 
+  const removeTodolist = (todolistId: string) => {
+    setTodolists([...todolists.filter(tl => tl.id !== todolistId)]);
+    delete tasks[todolistId];
+
+    setTasks({ ...tasks });
+  };
   return (
     <div className={s.app}>
       {
         todolists.map(tl => {
           let tasksForTodolist = tasks[tl.id];
-          console.log("tasksForTodolist", tasksForTodolist);
 
           if (tl.filter === 'active') {
             tasksForTodolist = tasks[tl.id].filter(t => !t.isDone);
@@ -75,13 +79,14 @@ export const App = ({ }: AppProps) => {
           return (
             <Todolist
               key={tl.id}
-              title="Want to learn" tasks={tasksForTodolist}
+              title={tl.title} tasks={tasksForTodolist}
               todolistId={tl.id}
               removeTask={removeTask}
               filter={tl.filter}
               changeFilter={changeFilter}
               addTask={addTask}
               changeTaskStatus={changeTaskStatus}
+              removeTodolist={removeTodolist}
             />
           );
         }
