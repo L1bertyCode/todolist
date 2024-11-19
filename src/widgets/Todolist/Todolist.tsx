@@ -1,8 +1,10 @@
 import { FilterType, TaskType } from "@/app/App/App";
-import { AppButton } from "@/app/shared/ui/AppButton/AppButton";
+import { AppButton } from "@/shared/ui/AppButton/AppButton";
 import { ChangeEvent, KeyboardEvent, useState } from "react";
 import s from "./Todolist.module.css";
 import cn from "classnames";
+import { AppInput } from "@/shared/ui/AppInput/AppInput";
+import { AddItemForm } from "@/fetures/AddItemForm";
 
 
 interface TodolistProps {
@@ -30,19 +32,9 @@ export const Todolist = ({
   addTask,
   changeTaskStatus, removeTodolist
 }: TodolistProps) => {
-  const [value, setValue] = useState<string>("");
-  const [error, setError] = useState("");
 
-  const addTaskHandler = () => {
-    if (value) {
-      setError("");
-      addTask(todolistId, value);
-      setValue("");
-    } else {
-      setError("Field is requred");
-    }
+  const addTaskCallback = (item: string) => addTask(todolistId, item);
 
-  };
   return (
     <div>
       <div className={s.tl}>
@@ -50,20 +42,9 @@ export const Todolist = ({
       </div>
       <h4>{subTitle}</h4>
       <p>{description}</p>
-      <div>
-        <input
-          className={cn(error && s.error)}
-          value={value} onChange={(e: ChangeEvent<HTMLInputElement>) => setValue(e.currentTarget.value)}
-          onKeyUp={(e: KeyboardEvent<HTMLInputElement>) => {
-            setError("");
-            if (e.key === "Enter") {
-              addTaskHandler();
-            }
-          }}
-        />
-        <AppButton onClick={addTaskHandler}>+</AppButton>
-        {error && <div className={s["error-message"]}>{error}</div>}
-      </div>
+      <AddItemForm
+        addItem={addTaskCallback}
+      />
       {tasks ? <ul>{tasks.map(t => <li key={t.id}
         className={cn(t.isDone && s["is-done"])}
       >
