@@ -5,6 +5,7 @@ import s from "./Todolist.module.css";
 import cn from "classnames";
 import { AppInput } from "@/shared/ui/AppInput/AppInput";
 import { AddItemForm } from "@/fetures/AddItemForm";
+import { EditableSpan } from "@/fetures/EditableSpan";
 
 
 interface TodolistProps {
@@ -19,6 +20,7 @@ interface TodolistProps {
   addTask: (todolistId: string, task: string) => void;
   changeTaskStatus: (todolistId: string, taskId: string, status: boolean) => void;
   removeTodolist: (todolistId: string,) => void;
+  updateTask: (todolisId: string, taskId: string, title: string) => void;
 }
 export const Todolist = ({
   title,
@@ -30,7 +32,8 @@ export const Todolist = ({
   filter,
   changeFilter,
   addTask,
-  changeTaskStatus, removeTodolist
+  changeTaskStatus, removeTodolist,
+  updateTask
 }: TodolistProps) => {
 
   const addTaskCallback = (item: string) => addTask(todolistId, item);
@@ -38,23 +41,36 @@ export const Todolist = ({
   return (
     <div>
       <div className={s.tl}>
-        <h3>{title}</h3> <AppButton onClick={() => removeTodolist(todolistId)}>x</AppButton>
+        <h3>
+          <EditableSpan
+            title={title}
+            onChangeTitle={() => { }} />
+        </h3> <AppButton onClick={() => removeTodolist(todolistId)}>x</AppButton>
       </div>
       <h4>{subTitle}</h4>
       <p>{description}</p>
       <AddItemForm
         addItem={addTaskCallback}
       />
-      {tasks ? <ul>{tasks.map(t => <li key={t.id}
-        className={cn(t.isDone && s["is-done"])}
-      >
-        <input
-          type="checkbox" checked={t.isDone}
-          onChange={(e: ChangeEvent<HTMLInputElement>) => changeTaskStatus(todolistId, t.id, e.currentTarget.checked)}
-        />
-        <span>{t.title}</span>
-        <AppButton onClick={() => removeTask(todolistId, t.id)}>x</AppButton>
-      </li>)}</ul> : <div>{"Tasks not found"}</div>}
+      {tasks ? <ul>{tasks.map(t => {
+        const changeTaskTitle = (title: string) => {
+          updateTask(todolistId, t.id, title);
+        };
+        return (
+          <li key={t.id}
+            className={cn(t.isDone && s["is-done"])}
+          >
+            <input
+              type="checkbox" checked={t.isDone}
+              onChange={(e: ChangeEvent<HTMLInputElement>) => changeTaskStatus(todolistId, t.id, e.currentTarget.checked)}
+            />
+            <EditableSpan title={t.title}
+              onChangeTitle={changeTaskTitle}
+            />
+            <AppButton onClick={() => removeTask(todolistId, t.id)}>x</AppButton>
+          </li>
+        );
+      })}</ul> : <div>{"Tasks not found"}</div>}
       <div>
         <AppButton className={cn(filter === "all" && s["active-filter"])} onClick={() => changeFilter("all", todolistId)}>All</AppButton>
         <AppButton className={cn(filter === "active" && s["active-filter"])} onClick={() => changeFilter("active", todolistId)}>Active</AppButton>

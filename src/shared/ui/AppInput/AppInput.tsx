@@ -5,10 +5,11 @@ interface AppInputProps extends InputHTMLAttributes<HTMLInputElement> {
   className?: string;
 };
 
-export const AppInput = ({ className, ...otherProps }: AppInputProps) => {
+export const AppInput = ({ className, type = "text", ...otherProps }: AppInputProps) => {
   return (
     <input
       {...otherProps}
+      type={type}
       className={
         cn(
           s.appInput, className && className

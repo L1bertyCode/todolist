@@ -72,6 +72,12 @@ export const App = ({ }: AppProps) => {
     setTasks({ ...tasks, [newTodolostId]: [] });
   };
 
+  const updateTask = (todolisId: string, taskId: string, title: string) => {
+    setTasks({
+      ...tasks, [todolisId]:
+        [...tasks[todolisId].map(t => t.id === taskId ? { ...t, title } : t)]
+    });
+  };
   return (
     <div className={s.app}>
       <AddItemForm addItem={addTodolist} />
@@ -98,6 +104,7 @@ export const App = ({ }: AppProps) => {
               addTask={addTask}
               changeTaskStatus={changeTaskStatus}
               removeTodolist={removeTodolist}
+              updateTask={updateTask}
             />
           );
         }
