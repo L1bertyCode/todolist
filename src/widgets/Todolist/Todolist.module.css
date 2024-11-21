@@ -1,7 +1,12 @@
-.tl {
+.todolist {
+  padding: 0 20px;
+}
+
+.title {
   display: flex;
   align-items: center;
   justify-content: space-between;
+
 }
 
 .active-filter {

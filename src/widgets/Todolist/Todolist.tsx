@@ -1,12 +1,13 @@
 import { FilterType, TaskType } from "@/app/App/App";
 import { AppButton } from "@/shared/ui/AppButton/AppButton";
-import { ChangeEvent, KeyboardEvent, useState } from "react";
+import { ChangeEvent } from "react";
 import s from "./Todolist.module.css";
 import cn from "classnames";
-import { AppInput } from "@/shared/ui/AppInput/AppInput";
 import { AddItemForm } from "@/fetures/AddItemForm";
 import { EditableSpan } from "@/fetures/EditableSpan";
-
+import MuiButton from '@mui/material/Button';
+import MuiIconButton from '@mui/material/IconButton';
+import MuiDeleteIcon from '@mui/icons-material/Delete';
 
 interface TodolistProps {
   title: string;
@@ -43,13 +44,13 @@ export const Todolist = ({
     updateTodolist(todolistId, title);
   };
   return (
-    <div>
-      <div className={s.tl}>
+    <div className={s.todolist}>
+      <div className={s.title}>
         <h3>
           <EditableSpan
             title={title}
             onChangeTitle={changeTodolistTitle} />
-        </h3> <AppButton onClick={() => removeTodolist(todolistId)}>x</AppButton>
+        </h3> <MuiIconButton onClick={() => removeTodolist(todolistId)}><MuiDeleteIcon /></MuiIconButton>
       </div>
       <h4>{subTitle}</h4>
       <p>{description}</p>
@@ -71,14 +72,23 @@ export const Todolist = ({
             <EditableSpan title={t.title}
               onChangeTitle={changeTaskTitle}
             />
-            <AppButton onClick={() => removeTask(todolistId, t.id)}>x</AppButton>
+            <MuiIconButton onClick={() => removeTask(todolistId, t.id)}><MuiDeleteIcon /></MuiIconButton>
           </li>
         );
       })}</ul> : <div>{"Tasks not found"}</div>}
       <div>
-        <AppButton className={cn(filter === "all" && s["active-filter"])} onClick={() => changeFilter("all", todolistId)}>All</AppButton>
-        <AppButton className={cn(filter === "active" && s["active-filter"])} onClick={() => changeFilter("active", todolistId)}>Active</AppButton>
-        <AppButton className={cn(filter === "completed" && s["active-filter"])} onClick={() => changeFilter("completed", todolistId)}>Completed</AppButton>
+        <MuiButton
+          variant={filter === 'all' ? 'outlined' : 'text'}
+          color={"inherit"}
+          onClick={() => changeFilter("all", todolistId)}>All</MuiButton>
+        <MuiButton
+          variant={filter === 'active' ? 'outlined' : 'text'}
+          color={"primary"}
+          onClick={() => changeFilter("active", todolistId)}>Active</MuiButton>
+        <MuiButton
+          variant={filter === 'completed' ? 'outlined' : 'text'}
+          color={'secondary'}
+          onClick={() => changeFilter("completed", todolistId)}>Completed</MuiButton>
       </div>
     </div>
   );
