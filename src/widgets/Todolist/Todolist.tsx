@@ -21,6 +21,7 @@ interface TodolistProps {
   changeTaskStatus: (todolistId: string, taskId: string, status: boolean) => void;
   removeTodolist: (todolistId: string,) => void;
   updateTask: (todolisId: string, taskId: string, title: string) => void;
+  updateTodolist: (todolistId: string, title: string) => void;
 }
 export const Todolist = ({
   title,
@@ -33,18 +34,21 @@ export const Todolist = ({
   changeFilter,
   addTask,
   changeTaskStatus, removeTodolist,
-  updateTask
+  updateTask,
+  updateTodolist
 }: TodolistProps) => {
 
   const addTaskCallback = (item: string) => addTask(todolistId, item);
-
+  const changeTodolistTitle = (title: string) => {
+    updateTodolist(todolistId, title);
+  };
   return (
     <div>
       <div className={s.tl}>
         <h3>
           <EditableSpan
             title={title}
-            onChangeTitle={() => { }} />
+            onChangeTitle={changeTodolistTitle} />
         </h3> <AppButton onClick={() => removeTodolist(todolistId)}>x</AppButton>
       </div>
       <h4>{subTitle}</h4>
