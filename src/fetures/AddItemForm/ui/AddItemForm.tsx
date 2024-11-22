@@ -4,6 +4,7 @@ import { AppButton } from "@/shared/ui/AppButton/AppButton";
 import { ChangeEvent, KeyboardEvent, useState } from "react";
 import MuiButton from '@mui/material/Button';
 import cn from "classnames";
+import TextField from "@mui/material/TextField";
 interface AddItemFormProps {
   addItem: (item: string) => void;
 };
@@ -12,7 +13,7 @@ export const AddItemForm = ({
 }: AddItemFormProps) => {
 
   const [value, setValue] = useState<string>("");
-  const [error, setError] = useState("");
+  const [error, setError] = useState<string>("");
 
   const addItemHandler = () => {
     if (value) {
@@ -20,27 +21,40 @@ export const AddItemForm = ({
       addItem(value);
       setValue("");
     } else {
-      setError("Field is requred");
+      setError("Field is required");
     }
 
   };
   return (
     <div
       className={s.addItemForm}>
-      <AppInput
-        className={cn(error && s.error)}
+      <TextField
+        label={"Enter a title"}
+        variant="outlined"
+        size={'small'}
+        error={!!error}
+        helperText={error}
         value={value} onChange={(e: ChangeEvent<HTMLInputElement>) => setValue(e.currentTarget.value)}
         onKeyUp={(e: KeyboardEvent<HTMLInputElement>) => {
           setError("");
           if (e.key === "Enter") {
             addItemHandler();
           }
+        }} />
+      {/* <AppInput
+        className={cn(error && s.error)}
+        value={value} onChange={(e: ChangeEvent<HTMLInputElement>) => setValue(e.currentTarget.value)}
+        onKeyUp={(e: KeyboardEvent<HTMLInputElement>) => {
+          setError(false);
+          if (e.key === "Enter") {
+            addItemHandler();
+          }
         }}
-      />
+      /> */}
       <MuiButton
         variant="contained"
         onClick={addItemHandler}>+</MuiButton>
-      {error && <div className={s["error-message"]}>{error}</div>}
+      {/* {error ? <div className={s["error-message"]}>{"Field is required"}</div> : undefined} */}
     </div>
   );
 };

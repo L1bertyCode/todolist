@@ -8,6 +8,9 @@ import { EditableSpan } from "@/fetures/EditableSpan";
 import MuiButton from '@mui/material/Button';
 import MuiIconButton from '@mui/material/IconButton';
 import MuiDeleteIcon from '@mui/icons-material/Delete';
+import Checkbox from "@mui/material/Checkbox";
+import List from '@mui/material/List';
+import ListItem from '@mui/material/ListItem';
 
 interface TodolistProps {
   title: string;
@@ -57,25 +60,28 @@ export const Todolist = ({
       <AddItemForm
         addItem={addTaskCallback}
       />
-      {tasks ? <ul>{tasks.map(t => {
+      {tasks ? <List>{tasks.map(t => {
         const changeTaskTitle = (title: string) => {
           updateTask(todolistId, t.id, title);
         };
         return (
-          <li key={t.id}
-            className={cn(t.isDone && s["is-done"])}
+          <ListItem key={t.id}
+            className={cn(s.task, t.isDone && s["is-done"])}
           >
-            <input
+            <Checkbox
+              checked={t.isDone}
+              onChange={(e: ChangeEvent<HTMLInputElement>) => changeTaskStatus(todolistId, t.id, e.currentTarget.checked)} />
+            {/* <input
               type="checkbox" checked={t.isDone}
               onChange={(e: ChangeEvent<HTMLInputElement>) => changeTaskStatus(todolistId, t.id, e.currentTarget.checked)}
-            />
+            /> */}
             <EditableSpan title={t.title}
               onChangeTitle={changeTaskTitle}
             />
             <MuiIconButton onClick={() => removeTask(todolistId, t.id)}><MuiDeleteIcon /></MuiIconButton>
-          </li>
+          </ListItem>
         );
-      })}</ul> : <div>{"Tasks not found"}</div>}
+      })}</List> : <div>{"Tasks not found"}</div>}
       <div>
         <MuiButton
           variant={filter === 'all' ? 'outlined' : 'text'}
