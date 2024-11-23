@@ -11,6 +11,9 @@ import MuiDeleteIcon from '@mui/icons-material/Delete';
 import Checkbox from "@mui/material/Checkbox";
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
+import Box from '@mui/material/Box';
+import { filterButtonsContainerSx, getListItemSx } from "./Todolist.styles";
+
 
 interface TodolistProps {
   title: string;
@@ -48,6 +51,7 @@ export const Todolist = ({
   };
   return (
     <div className={s.todolist}>
+
       <div className={s.title}>
         <h3>
           <EditableSpan
@@ -66,7 +70,7 @@ export const Todolist = ({
         };
         return (
           <ListItem key={t.id}
-            className={cn(s.task, t.isDone && s["is-done"])}
+            sx={getListItemSx(t.isDone)}
           >
             <Checkbox
               checked={t.isDone}
@@ -82,7 +86,7 @@ export const Todolist = ({
           </ListItem>
         );
       })}</List> : <div>{"Tasks not found"}</div>}
-      <div>
+      <Box sx={filterButtonsContainerSx}>
         <MuiButton
           variant={filter === 'all' ? 'outlined' : 'text'}
           color={"inherit"}
@@ -95,7 +99,7 @@ export const Todolist = ({
           variant={filter === 'completed' ? 'outlined' : 'text'}
           color={'secondary'}
           onClick={() => changeFilter("completed", todolistId)}>Completed</MuiButton>
-      </div>
+      </Box>
     </div>
   );
 };

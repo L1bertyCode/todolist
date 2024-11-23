@@ -1,18 +1,8 @@
-.todolist {
-  padding: 0 20px;
-}
+.todolist {}
 
 .title {
   display: flex;
   align-items: center;
   justify-content: space-between;
-
 }
 
-.active-filter {
-  background-color: lightgreen;
-}
-
-.is-done {
-  opacity: 0.5;
-}

@@ -4,6 +4,7 @@ import { AppInput } from "@/shared/ui/AppInput/AppInput";
 
 import TextField from "@mui/material/TextField";
 
+
 interface EditableSpanProps {
   title: string;
   onChangeTitle: (newTitle: string) => void;

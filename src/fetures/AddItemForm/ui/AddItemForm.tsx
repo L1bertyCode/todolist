@@ -5,6 +5,9 @@ import { ChangeEvent, KeyboardEvent, useState } from "react";
 import MuiButton from '@mui/material/Button';
 import cn from "classnames";
 import TextField from "@mui/material/TextField";
+import AddBoxIcon from '@mui/icons-material/AddBox';
+import IconButton from '@mui/material/IconButton';
+
 interface AddItemFormProps {
   addItem: (item: string) => void;
 };
@@ -41,6 +44,12 @@ export const AddItemForm = ({
             addItemHandler();
           }
         }} />
+      <IconButton onClick={addItemHandler} color={'primary'}>
+        <AddBoxIcon />
+      </IconButton>
+      {/* <MuiButton
+          variant="contained"
+          onClick={addItemHandler}>+</MuiButton> */}
       {/* <AppInput
         className={cn(error && s.error)}
         value={value} onChange={(e: ChangeEvent<HTMLInputElement>) => setValue(e.currentTarget.value)}
@@ -51,9 +60,6 @@ export const AddItemForm = ({
           }
         }}
       /> */}
-      <MuiButton
-        variant="contained"
-        onClick={addItemHandler}>+</MuiButton>
       {/* {error ? <div className={s["error-message"]}>{"Field is required"}</div> : undefined} */}
     </div>
   );
