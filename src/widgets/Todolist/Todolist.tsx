@@ -1,4 +1,4 @@
-import { FilterType, TaskType } from "@/app/App/App";
+import { FilterValuesType, TaskType } from "@/app/App/App";
 import { AppButton } from "@/shared/ui/AppButton/AppButton";
 import { ChangeEvent } from "react";
 import s from "./Todolist.module.css";
@@ -22,8 +22,8 @@ interface TodolistProps {
   tasks?: TaskType[];
   todolistId: string;
   removeTask: (todolistId: string, taskId: string) => void;
-  filter: FilterType;
-  changeFilter: (filter: FilterType, todolistId: string) => void;
+  filter: FilterValuesType;
+  changeFilter: (filter: FilterValuesType, todolistId: string) => void;
   addTask: (todolistId: string, task: string) => void;
   changeTaskStatus: (todolistId: string, taskId: string, status: boolean) => void;
   removeTodolist: (todolistId: string,) => void;

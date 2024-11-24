@@ -23,12 +23,12 @@ export type TaskType = {
   title: string;
   isDone: boolean;
 };
-export type FilterType = "all" | "completed" | "active";
+export type FilterValuesType = "all" | "completed" | "active";
 
 export type TodolistType = {
   id: string,
   title: string;
-  filter: FilterType;
+  filter: FilterValuesType;
 };
 interface AppProps { };
 
@@ -75,7 +75,7 @@ export const App = ({ }: AppProps) => {
     setTasks({ ...tasks, [todolistId]: [...tasks[todolistId].filter(t => t.id !== taskId)] });
   };
 
-  const changeFilter = (filter: FilterType, todolistId: string) => {
+  const changeFilter = (filter: FilterValuesType, todolistId: string) => {
     setTodolists([...todolists.map(tl => tl.id === todolistId ? { ...tl, filter } : tl)]);
   };
 

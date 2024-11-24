@@ -1,10 +1,41 @@
-import { TodolistType } from '@/app/App/App';
+import { FilterValuesType, TodolistType } from '@/app/App/App';
 import { v1 } from 'uuid';
-
-type ActionsType = {
-  type: string;
-  payload: any;
+export type RemoveTodolistActionType = {
+  type: 'REMOVE-TODOLIST';
+  payload: {
+    id: string;
+  };
 };
+
+export type AddTodolistActionType = {
+  type: 'ADD-TODOLIST';
+  payload: {
+    title: string;
+  };
+};
+
+export type ChangeTodolistTitleActionType = {
+  type: 'CHANGE-TODOLIST-TITLE';
+  payload: {
+    id: string;
+    title: string;
+  };
+};
+
+export type ChangeTodolistFilterActionType = {
+  type: 'CHANGE-TODOLIST-FILTER';
+  payload: {
+    id: string;
+    filter: FilterValuesType;
+  };
+};
+
+type ActionsType =
+  | RemoveTodolistActionType
+  | AddTodolistActionType
+  | ChangeTodolistTitleActionType
+  | ChangeTodolistFilterActionType;
+
 
 let todolistID1 = v1();
 let todolistID2 = v1();
@@ -31,4 +62,38 @@ export const todolistsReducer = (state: TodolistType[] = initialState, action: A
     default:
       throw new Error("I don't understand this type");
   }
+};
+
+export const removeTodolistAC = (todolistId: string): RemoveTodolistActionType => {
+  return { type: 'REMOVE-TODOLIST', payload: { id: todolistId } } as const;
+};
+
+export const addTodolistAC = (title: string): AddTodolistActionType => {
+  return { type: 'ADD-TODOLIST', payload: { title } } as const;
+};
+
+export const changeTodolistTitleAC = (
+  todolistId: string,
+  title: string,
+): ChangeTodolistTitleActionType => {
+  return {
+    type: "CHANGE-TODOLIST-TITLE", payload:
+    {
+      id: todolistId,
+      title: title,
+    }
+  } as const;
+};
+
+export const changeTodolistFilterAC = (
+  todolistId: string,
+  filter: FilterValuesType,
+): ChangeTodolistFilterActionType => {
+  return {
+    type: "CHANGE-TODOLIST-FILTER", payload:
+    {
+      id: todolistId,
+      filter: filter,
+    }
+  } as const;
 };
