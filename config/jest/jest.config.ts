@@ -35,6 +35,15 @@ const config: Config = {
     "node"
   ],
 
+  // The root directory that Jest should scan for tests and modules within
+  rootDir: "../../",
+
+
+  // The glob patterns Jest uses to detect test files
+  testMatch: [
+    '<rootDir>src/**/*(*.)@(spec|test).[tj]s?(x)'
+  ],
+
   // All imported modules in your tests should be mocked automatically
   // automock: false,
 
@@ -132,9 +141,6 @@ const config: Config = {
   // Automatically restore mock state and implementation before every test
   // restoreMocks: false,
 
-  // The root directory that Jest should scan for tests and modules within
-  // rootDir: undefined,
-
   // A list of paths to directories that Jest should use to search for files in
   // roots: [
   //   "<rootDir>"
@@ -161,11 +167,6 @@ const config: Config = {
   // Adds a location field to test results
   // testLocationInResults: false,
 
-  // The glob patterns Jest uses to detect test files
-  // testMatch: [
-  //   "**/__tests__/**/*.[jt]s?(x)",
-  //   "**/?(*.)+(spec|test).[tj]s?(x)"
-  // ],
 
   // An array of regexp pattern strings that are matched against all test paths, matched tests are skipped
   // testPathIgnorePatterns: [

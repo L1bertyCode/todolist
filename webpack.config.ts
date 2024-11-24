@@ -34,7 +34,16 @@ const config = (env: BuildEnv): Configuration => {
         },
       },
     }],
-
+  };
+  const babelLoader = {
+    test: /\.m?js$/,
+    exclude: /node_modules/,
+    use: {
+      loader: "babel-loader",
+      options: {
+        presets: ['@babel/preset-env']
+      }
+    }
   };
 
   return {
@@ -47,7 +56,9 @@ const config = (env: BuildEnv): Configuration => {
     },
     module: {
       rules: [
-        tsLoader, cssLoader
+        tsLoader,
+        cssLoader,
+        babelLoader
       ],
     },
     plugins: [new HtmlWebpackPlugin({ template: paths.html }), new MiniCssExtractPlugin({
