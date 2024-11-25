@@ -23,6 +23,7 @@ export type TaskType = {
   title: string;
   isDone: boolean;
 };
+export type TasksStateType = Record<string, TaskType[]>;
 export type FilterValuesType = "all" | "completed" | "active";
 
 export type TodolistType = {
