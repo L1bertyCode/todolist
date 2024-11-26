@@ -15,6 +15,8 @@ import { MenuButton } from "@/shared/ui/MenuButton/MenuButton";
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Switch from '@mui/material/Switch';
 import CssBaseline from '@mui/material/CssBaseline';
+import { addTodolistAC, todolistsReducer } from "@/model/todolists-reducer/todolists-reducer";
+import { tasksReducer } from "@/model/tasks-reducer/tasks-reducer";
 
 type ThemeMode = 'dark' | 'light';
 
@@ -36,6 +38,20 @@ interface AppProps { };
 
 
 export const App = ({ }: AppProps) => {
+  const startTasksState: TasksStateType = {};
+  const startTodolistsState: TodolistType[] = [];
+
+  const action = addTodolistAC('new todolist');
+  console.log("action", action);
+  const endTasksState = tasksReducer(startTasksState, action);
+  const endTodolistsState = todolistsReducer(startTodolistsState, action);
+  const keys = Object.keys(endTasksState);
+  const idFromTasks = keys[0];
+  const idFromTodolists = endTodolistsState[0].id;
+
+  console.log("idFromTasks", idFromTasks);
+  console.log("idFromTodolists", idFromTodolists);
+
 
   const [themeMode, setThemeMode] = useState<ThemeMode>('light');
 
@@ -151,7 +167,7 @@ export const App = ({ }: AppProps) => {
                 if (tl.filter === "completed") {
                   tasksForTodolist = tasks[tl.id].filter(t => t.isDone);
                 }
-                console.log("tl.id", tl.id);
+
 
                 return (
                   <Grid

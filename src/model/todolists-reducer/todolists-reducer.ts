@@ -4,11 +4,12 @@ import { v1 } from 'uuid';
 
 // Action creators
 export const removeTodolistAC = (todolistId: string) => {
-  return { type: 'REMOVE-TODOLIST', payload: { id: todolistId } } as const;
+  return { type: 'REMOVE-TODOLIST', payload: { todolistId: todolistId } } as const;
 };
 
 export const addTodolistAC = (title: string) => {
-  return { type: 'ADD-TODOLIST', payload: { title } } as const;
+  const newTodolistId = String(v1());
+  return { type: 'ADD-TODOLIST', payload: { title, todolistId: newTodolistId } } as const;
 };
 
 export const changeTodolistTitleAC = (id: string, title: string) => {
@@ -42,10 +43,10 @@ const initialState: TodolistType[] = [
 export const todolistsReducer = (state: TodolistType[] = initialState, action: ActionsType) => {
   switch (action.type) {
     case 'REMOVE-TODOLIST': {
-      return [...state.filter(tl => tl.id !== action.payload.id)];
+      return [...state.filter(tl => tl.id !== action.payload.todolistId)];
     }
     case 'ADD-TODOLIST': {
-      return [...state, { id: v1(), title: action.payload.title, filter: "all" }];
+      return [...state, { id: action.payload.todolistId, title: action.payload.title, filter: "all" }];
     }
     case 'CHANGE-TODOLIST-TITLE': {
       return [...state.map(tl => tl.id === action.payload.id ? { ...tl, title: action.payload.title } : tl)];
