@@ -25,7 +25,7 @@ interface TodolistProps {
   filter: FilterValuesType;
   changeFilter: (filter: FilterValuesType, todolistId: string) => void;
   addTask: (todolistId: string, task: string) => void;
-  changeTaskStatus: (todolistId: string, taskId: string, status: boolean) => void;
+  changeTaskStatus: (taskId: string, taskStatus: boolean, todolistId: string) => void;
   removeTodolist: (todolistId: string,) => void;
   updateTask: (todolisId: string, taskId: string, title: string) => void;
   updateTodolist: (todolistId: string, title: string) => void;
@@ -74,7 +74,7 @@ export const Todolist = ({
           >
             <Checkbox
               checked={t.isDone}
-              onChange={(e: ChangeEvent<HTMLInputElement>) => changeTaskStatus(todolistId, t.id, e.currentTarget.checked)} />
+              onChange={(e: ChangeEvent<HTMLInputElement>) => changeTaskStatus(t.id, e.currentTarget.checked, todolistId)} />
             {/* <input
               type="checkbox" checked={t.isDone}
               onChange={(e: ChangeEvent<HTMLInputElement>) => changeTaskStatus(todolistId, t.id, e.currentTarget.checked)}

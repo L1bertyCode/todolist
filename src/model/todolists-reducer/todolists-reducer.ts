@@ -57,7 +57,7 @@ export const todolistsReducer = (state: TodolistType[] = initialState, action: A
       return [...state.map(tl => tl.id === action.payload.id ? { ...tl, filter: action.payload.filter } : tl)];
     }
     default:
-      throw new Error("I don't understand this type");
+      return state;
   }
 };
 
