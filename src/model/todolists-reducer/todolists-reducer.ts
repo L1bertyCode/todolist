@@ -32,6 +32,8 @@ type ActionsType =
   | ChangeTodolistTitleActionType
   | ChangeTodolistFilterActionType;
 
+
+
 let todolistID1 = v1();
 let todolistID2 = v1();
 
@@ -39,14 +41,14 @@ const initialState: TodolistType[] = [
   { id: todolistID1, title: 'What to learn', filter: 'all' },
   { id: todolistID2, title: 'What to buy', filter: 'all' },
 ];
-
 export const todolistsReducer = (state: TodolistType[] = initialState, action: ActionsType) => {
   switch (action.type) {
     case 'REMOVE-TODOLIST': {
       return [...state.filter(tl => tl.id !== action.payload.todolistId)];
     }
     case 'ADD-TODOLIST': {
-      return [...state, { id: action.payload.todolistId, title: action.payload.title, filter: "all" }];
+      const newTodolist: TodolistType = { id: action.payload.todolistId, title: action.payload.title, filter: 'all' };
+      return [...state, newTodolist];
     }
     case 'CHANGE-TODOLIST-TITLE': {
       return [...state.map(tl => tl.id === action.payload.id ? { ...tl, title: action.payload.title } : tl)];
