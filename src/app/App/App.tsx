@@ -92,7 +92,7 @@ export const App = ({ }: AppProps) => {
   };
 
   const changeFilter = (filter: FilterValuesType, todolistId: string) => {
-    dispatch(changeTodolistFilterAC(todolistId, filter));
+    dispatch(changeTodolistFilterAC({ todolistId, filter }));
   };
 
   const removeTodolist = (todolistId: string) => {
@@ -104,7 +104,7 @@ export const App = ({ }: AppProps) => {
   };
 
   const updateTodolist = (todolistId: string, title: string) => {
-    dispatch(changeTodolistTitleAC(todolistId, title));
+    dispatch(changeTodolistTitleAC({ todolistId, title }));
   };
 
 
