@@ -1,6 +1,6 @@
 import { Todolist } from "@/widgets/Todolist/Todolist";
 import s from "./App.module.css";
-import { useReducer, useState } from "react";
+import { useState } from "react";
 import { v1 } from "uuid";
 import { AddItemForm } from "@/fetures/AddItemForm";
 import AppBar from '@mui/material/AppBar';
@@ -19,6 +19,8 @@ import { addTodolistAC, changeTodolistFilterAC, changeTodolistTitleAC, removeTod
 import { addTaskAC, changeTaskStatusAC, changeTaskTitleAC, removeTaskAC, tasksReducer } from "@/model/tasks-reducer/tasks-reducer";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../providers/reduxProvider/stor";
+import { getTheme } from "../theme";
+import { changeThemeAC } from "../providers/appProvider/app-reducer";
 
 type ThemeMode = 'dark' | 'light';
 
@@ -37,8 +39,6 @@ export type TodolistType = {
 };
 interface AppProps { };
 
-
-
 export const App = ({ }: AppProps) => {
   const startTasksState: TasksStateType = {};
   const startTodolistsState: TodolistType[] = [];
@@ -56,20 +56,13 @@ export const App = ({ }: AppProps) => {
   const idFromTodolists = endTodolistsState[0].id;
 
 
+  const themeMode = useSelector<RootState, ThemeMode>(state => state.app.themeMode);
 
+  const theme = getTheme(themeMode);
+  console.log("theme", theme.palette.mode);
 
-  const [themeMode, setThemeMode] = useState<ThemeMode>('light');
-
-  const theme = createTheme({
-    palette: {
-      mode: themeMode === 'light' ? 'light' : 'dark',
-      primary: {
-        main: '#087EA4',
-      },
-    },
-  });
   const changeModeHandler = () => {
-    setThemeMode(themeMode == 'light' ? 'dark' : 'light');
+    dispatch(changeThemeAC(themeMode === 'light' ? 'dark' : 'light'));
   };
 
   const todolistID1 = v1();
@@ -109,7 +102,9 @@ export const App = ({ }: AppProps) => {
 
 
   return (
-    <ThemeProvider theme={theme}>
+    <ThemeProvider theme={theme
+
+    }>
       <CssBaseline />
       <div className={s.app}>
         <AppBar position="static" sx={{ mb: '30px' }}>
