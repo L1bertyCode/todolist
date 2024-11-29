@@ -1,5 +1,3 @@
-import { TodolistType } from '@/app/App/App';
-import { FilterValuesType } from "../tasks-reducer/tasks-reducer";
 import { v1 } from 'uuid';
 
 
@@ -62,5 +60,11 @@ export const todolistsReducer = (state: TodolistType[] = initialState, action: A
     default:
       return state;
   }
+};
+export type FilterValuesType = "all" | "completed" | "active";
+export type TodolistType = {
+  id: string;
+  title: string;
+  filter: FilterValuesType;
 };
 

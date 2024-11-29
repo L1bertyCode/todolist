@@ -1,4 +1,5 @@
-import { FilterValuesType, TaskType } from "@/model/tasks-reducer/tasks-reducer";
+import { TaskType } from "@/model/tasks-reducer/tasks-reducer";
+import { FilterValuesType, TodolistType } from '@/model/todolists-reducer/todolists-reducer';
 import { ChangeEvent } from "react";
 import s from "./Todolist.module.css";
 import { AddItemForm } from "@/fetures/AddItemForm";
@@ -11,41 +12,33 @@ import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import Box from '@mui/material/Box';
 import { filterButtonsContainerSx, getListItemSx } from "./Todolist.styles";
+import { FilterTasksButtons } from "./FilterTasksButtons";
 
 
 interface TodolistProps {
-  title: string;
-  subTitle?: string;
-  description?: string;
+  todolist: TodolistType;
   tasks: TaskType[];
-  todolistId: string;
   removeTask: (todolistId: string, taskId: string) => void;
-  filter: FilterValuesType;
-  changeFilter: (filter: FilterValuesType, todolistId: string) => void;
   addTask: (todolistId: string, task: string) => void;
   changeTaskStatus: (taskId: string, taskStatus: boolean, todolistId: string) => void;
+  
   removeTodolist: (todolistId: string,) => void;
   updateTask: (todolisId: string, taskId: string, title: string) => void;
   updateTodolist: (todolistId: string, title: string) => void;
 }
 export const Todolist = ({
-  title,
-  subTitle,
-  description,
+  todolist,
   tasks,
-  todolistId,
   removeTask,
-  filter,
-  changeFilter,
   addTask,
   changeTaskStatus, removeTodolist,
   updateTask,
   updateTodolist
 }: TodolistProps) => {
 
-  const addTaskCallback = (title: string) => addTask(title, todolistId);
+  const addTaskCallback = (title: string) => addTask(title, todolist.id);
   const changeTodolistTitle = (title: string) => {
-    updateTodolist(title, todolistId);
+    updateTodolist(title, todolist.id);
   };
   return (
     <div className={s.todolist}>
@@ -53,18 +46,17 @@ export const Todolist = ({
       <div className={s.title}>
         <h3>
           <EditableSpan
-            title={title}
+            title={todolist.title}
             onChangeTitle={changeTodolistTitle} />
-        </h3> <MuiIconButton onClick={() => removeTodolist(todolistId)}><MuiDeleteIcon /></MuiIconButton>
+        </h3>
+        <MuiIconButton onClick={() => removeTodolist(todolist.id)}><MuiDeleteIcon /></MuiIconButton>
       </div>
-      <h4>{subTitle}</h4>
-      <p>{description}</p>
       <AddItemForm
         addItem={addTaskCallback}
       />
       {tasks?.length !== 0 ? <List>{tasks?.map(t => {
         const changeTaskTitle = (title: string) => {
-          updateTask(todolistId, t.id, title);
+          updateTask(todolist.id, t.id, title);
         };
         return (
           <ListItem key={t.id}
@@ -72,32 +64,17 @@ export const Todolist = ({
           >
             <Checkbox
               checked={t.isDone}
-              onChange={(e: ChangeEvent<HTMLInputElement>) => changeTaskStatus(t.id, e.currentTarget.checked, todolistId)} />
-            {/* <input
-              type="checkbox" checked={t.isDone}
-              onChange={(e: ChangeEvent<HTMLInputElement>) => changeTaskStatus(todolistId, t.id, e.currentTarget.checked)}
-            /> */}
+              onChange={(e: ChangeEvent<HTMLInputElement>) => changeTaskStatus(t.id, e.currentTarget.checked, todolist.id)} />
             <EditableSpan title={t.title}
               onChangeTitle={changeTaskTitle}
             />
-            <MuiIconButton onClick={() => removeTask(todolistId, t.id)}><MuiDeleteIcon /></MuiIconButton>
+            <MuiIconButton onClick={() => removeTask(todolist.id, t.id)}><MuiDeleteIcon /></MuiIconButton>
           </ListItem>
         );
       })}</List> : <div>{"Tasks not found"}</div>}
-      <Box sx={filterButtonsContainerSx}>
-        <MuiButton
-          variant={filter === 'all' ? 'outlined' : 'text'}
-          color={"inherit"}
-          onClick={() => changeFilter("all", todolistId)}>All</MuiButton>
-        <MuiButton
-          variant={filter === 'active' ? 'outlined' : 'text'}
-          color={"primary"}
-          onClick={() => changeFilter("active", todolistId)}>Active</MuiButton>
-        <MuiButton
-          variant={filter === 'completed' ? 'outlined' : 'text'}
-          color={'secondary'}
-          onClick={() => changeFilter("completed", todolistId)}>Completed</MuiButton>
-      </Box>
+      <FilterTasksButtons
+        todolist={todolist}
+      />
     </div>
   );
 };

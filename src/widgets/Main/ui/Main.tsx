@@ -1,11 +1,12 @@
 import { Container, Grid2 as Grid, Paper } from "@mui/material";
 import s from "./Main.module.css";
 import { AddItemForm } from "@/fetures/AddItemForm";
-import { Todolist } from "@/widgets/Todolist/Todolist";
+import { Todolist } from "@/widgets/Todolist/ui/Todolist";
 import { useDispatch, useSelector } from "react-redux";
 import { addTaskAC, changeTaskStatusAC, changeTaskTitleAC, removeTaskAC } from "@/model/tasks-reducer/tasks-reducer";
-import { TodolistType } from "@/app/App/App";
-import { FilterValuesType, TasksStateType } from "@/model/tasks-reducer/tasks-reducer";
+import { TodolistType } from "@/model/todolists-reducer/todolists-reducer";
+import { TasksStateType } from "@/model/tasks-reducer/tasks-reducer";
+import { FilterValuesType } from '@/model/todolists-reducer/todolists-reducer';
 import { addTodolistAC, changeTodolistFilterAC, changeTodolistTitleAC, removeTodolistAC } from "@/model/todolists-reducer/todolists-reducer";
 import { RootState } from "@/app/providers/reduxProvider/store";
 interface MainProps { };
@@ -31,10 +32,7 @@ export const Main = ({ }: MainProps) => {
     dispatch(changeTaskTitleAC({ taskId, title, todolistId }));
   };
 
-  const changeFilter = (filter: FilterValuesType, todolistId: string) => {
-    dispatch(changeTodolistFilterAC({ todolistId, filter }));
 
-  };
 
   const removeTodolist = (todolistId: string) => {
     dispatch(removeTodolistAC(todolistId));
@@ -77,11 +75,9 @@ export const Main = ({ }: MainProps) => {
 
                   <Todolist
                     key={tl.id}
-                    title={tl.title} tasks={tasksForTodolist}
-                    todolistId={tl.id}
+                    todolist={tl}
+                    tasks={tasksForTodolist}
                     removeTask={removeTask}
-                    filter={tl.filter}
-                    changeFilter={changeFilter}
                     addTask={addTask}
                     changeTaskStatus={changeTaskStatus}
                     removeTodolist={removeTodolist}

@@ -10,24 +10,15 @@ import { getTheme } from "../theme";
 
 import s from "./App.module.css";
 
-import { FilterValuesType } from "@/model/tasks-reducer/tasks-reducer";
 
 type ThemeMode = 'dark' | 'light';
 
-export type TodolistType = {
-  id: string,
-  title: string;
-  filter: FilterValuesType;
-};
 interface AppProps { };
 
 export const App = ({ }: AppProps) => {
   const themeMode = useSelector<RootState, ThemeMode>(state => state.app.themeMode);
-  const theme = getTheme(themeMode);
   return (
-    <ThemeProvider theme={theme
-
-    }>
+    <ThemeProvider theme={getTheme(themeMode)}>
       <CssBaseline />
       <div className={s.app}>
         <Header />

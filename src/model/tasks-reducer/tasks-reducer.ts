@@ -8,7 +8,6 @@ export type TaskType = {
   isDone: boolean;
 };
 export type TasksStateType = Record<string, TaskType[]>;
-export type FilterValuesType = "all" | "completed" | "active";
 
 const initialState: TasksStateType = {};
 
