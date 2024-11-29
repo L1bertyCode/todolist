@@ -1,4 +1,5 @@
-import { FilterValuesType, TodolistType } from '@/app/App/App';
+import { TodolistType } from '@/app/App/App';
+import { FilterValuesType } from "../tasks-reducer/tasks-reducer";
 import { v1 } from 'uuid';
 
 

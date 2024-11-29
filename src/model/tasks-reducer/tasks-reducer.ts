@@ -1,6 +1,14 @@
-import { TasksStateType } from '@/app/App/App';
 import { v1 } from 'uuid';
+
 import { AddTodolistActionType, RemoveTodolistActionType } from '../todolists-reducer/todolists-reducer';
+
+export type TaskType = {
+  id: string;
+  title: string;
+  isDone: boolean;
+};
+export type TasksStateType = Record<string, TaskType[]>;
+export type FilterValuesType = "all" | "completed" | "active";
 
 const initialState: TasksStateType = {};
 
@@ -10,7 +18,18 @@ export const tasksReducer = (state: TasksStateType = initialState, action: Actio
       return { ...state, [action.payload.todolistId]: [...state[action.payload.todolistId].filter(t => t.id !== action.payload.taskId)] };
     }
     case "ADD-TASK": {
-      return { ...state, [action.payload.todolistId]: [...state[action.payload.todolistId], { id: v1(), title: action.payload.title, isDone: false }] };
+      console.log("action.payload.title", action.payload.todolistId);
+
+      return {
+        ...state,
+        [action.payload.todolistId]:
+          [...state[action.payload.todolistId],
+          {
+            id: v1(),
+            title: action.payload.title, isDone: false
+          }
+          ]
+      };
     }
     case "CHANGE-TASK-STATUS": {
       return { ...state, [action.payload.todolistId]: state[action.payload.todolistId].map(t => t.id === action.payload.taskId ? { ...t, isDone: action.payload.isDone } : t) };
@@ -41,6 +60,7 @@ export const removeTaskAC = (payload: { taskId: string; todolistId: string; }) =
 };
 
 export const addTaskAC = (payload: { title: string, todolistId: string; }) => {
+
   return {
     type: "ADD-TASK",
     payload

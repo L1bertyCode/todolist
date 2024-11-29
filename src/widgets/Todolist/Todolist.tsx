@@ -1,8 +1,6 @@
-import { FilterValuesType, TaskType } from "@/app/App/App";
-import { AppButton } from "@/shared/ui/AppButton/AppButton";
+import { FilterValuesType, TaskType } from "@/model/tasks-reducer/tasks-reducer";
 import { ChangeEvent } from "react";
 import s from "./Todolist.module.css";
-import cn from "classnames";
 import { AddItemForm } from "@/fetures/AddItemForm";
 import { EditableSpan } from "@/fetures/EditableSpan";
 import MuiButton from '@mui/material/Button';
@@ -19,7 +17,7 @@ interface TodolistProps {
   title: string;
   subTitle?: string;
   description?: string;
-  tasks?: TaskType[];
+  tasks: TaskType[];
   todolistId: string;
   removeTask: (todolistId: string, taskId: string) => void;
   filter: FilterValuesType;
@@ -45,9 +43,9 @@ export const Todolist = ({
   updateTodolist
 }: TodolistProps) => {
 
-  const addTaskCallback = (item: string) => addTask(todolistId, item);
+  const addTaskCallback = (title: string) => addTask(title, todolistId);
   const changeTodolistTitle = (title: string) => {
-    updateTodolist(todolistId, title);
+    updateTodolist(title, todolistId);
   };
   return (
     <div className={s.todolist}>
@@ -64,7 +62,7 @@ export const Todolist = ({
       <AddItemForm
         addItem={addTaskCallback}
       />
-      {tasks ? <List>{tasks.map(t => {
+      {tasks?.length !== 0 ? <List>{tasks?.map(t => {
         const changeTaskTitle = (title: string) => {
           updateTask(todolistId, t.id, title);
         };
