@@ -3,9 +3,9 @@ import s from "./Main.module.css";
 import { AddItemForm } from "@/fetures/AddItemForm";
 import { Todolist } from "@/widgets/Todolist/ui/Todolist";
 import { useDispatch, useSelector } from "react-redux";
-import { addTaskAC, changeTaskStatusAC, changeTaskTitleAC, removeTaskAC } from "@/model/tasks-reducer/tasks-reducer";
+import { addTaskAC } from "@/model/tasks-reducer/tasks-reducer";
 import { TodolistType } from "@/model/todolists-reducer/todolists-reducer";
-import { TasksStateType } from "@/model/tasks-reducer/tasks-reducer";
+
 import { addTodolistAC, changeTodolistTitleAC, removeTodolistAC } from "@/model/todolists-reducer/todolists-reducer";
 import { RootState } from "@/app/providers/reduxProvider/store";
 interface MainProps { };

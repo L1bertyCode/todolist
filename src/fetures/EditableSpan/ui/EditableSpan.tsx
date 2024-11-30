@@ -7,9 +7,9 @@ import TextField from "@mui/material/TextField";
 
 interface EditableSpanProps {
   title: string;
-  onChangeTitle: (newTitle: string) => void;
+  onChange: (newTitle: string) => void;
 };
-export const EditableSpan = ({ title, onChangeTitle }: EditableSpanProps) => {
+export const EditableSpan = ({ title, onChange }: EditableSpanProps) => {
   const [editMode, setEditMode] = useState<boolean>(false);
   const [value, setValue] = useState<string>(title);
 
@@ -30,12 +30,12 @@ export const EditableSpan = ({ title, onChangeTitle }: EditableSpanProps) => {
           onKeyDown={(e: KeyboardEvent<HTMLInputElement>) => {
             if (e.key === "Enter") {
               setEditMode(false);
-              onChangeTitle(value);
+              onChange(value);
             }
           }}
           onBlur={() => {
             setEditMode(false);
-            onChangeTitle(value);
+            onChange(value);
           }}
         />
         // <AppInput

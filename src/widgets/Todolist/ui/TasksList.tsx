@@ -33,7 +33,7 @@ export const TasksList = ({ todolist }: TasksListProps) => {
   if (todolist.filter === "completed") {
     tasksForTodolist = tasks[todolist.id].filter(t => t.isDone);
   }
-  
+
   return (
     < >
       {tasksForTodolist?.length !== 0 ? <List>{tasksForTodolist?.map(t => {
@@ -48,7 +48,7 @@ export const TasksList = ({ todolist }: TasksListProps) => {
               checked={t.isDone}
               onChange={(e: ChangeEvent<HTMLInputElement>) => changeTaskStatus(t.id, e.currentTarget.checked, todolist.id)} />
             <EditableSpan title={t.title}
-              onChangeTitle={changeTaskTitle}
+              onChange={changeTaskTitle}
             />
             <MuiIconButton onClick={() => removeTask(todolist.id, t.id)}><MuiDeleteIcon /></MuiIconButton>
           </ListItem>

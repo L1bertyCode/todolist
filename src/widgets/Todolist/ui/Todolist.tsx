@@ -10,6 +10,7 @@ import MuiDeleteIcon from '@mui/icons-material/Delete';
 
 import { FilterTasksButtons } from "./FilterTasksButtons";
 import { TasksList } from "./TasksList";
+import { TodolistTitle } from "./TodolistTitle";
 
 
 interface TodolistProps {
@@ -33,14 +34,7 @@ export const Todolist = ({
   };
   return (
     <div className={s.todolist}>
-      <div className={s.title}>
-        <h3>
-          <EditableSpan
-            title={todolist.title}
-            onChangeTitle={changeTodolistTitle} />
-        </h3>
-        <MuiIconButton onClick={() => removeTodolist(todolist.id)}><MuiDeleteIcon /></MuiIconButton>
-      </div>
+        <TodolistTitle todolist={todolist} />
       <AddItemForm
         addItem={addTaskCallback}
       />
