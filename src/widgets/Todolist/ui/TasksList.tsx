@@ -8,6 +8,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { getListItemSx } from "./Todolist.styles";
 import { RootState } from "@/app/providers/reduxProvider/store";
 import { TodolistType } from "@/model/todolists-reducer/todolists-reducer";
+
+
 interface TasksListProps {
   todolist: TodolistType;
 };
@@ -17,7 +19,8 @@ export const TasksList = ({ todolist }: TasksListProps) => {
   const dispatch = useDispatch();
 
   const removeTask = (taskId: string, todolistId: string) => {
-    dispatch(removeTaskAC({ taskId, todolistId }));
+  dispatch(removeTaskAC({ taskId, todolistId }));
+
   };
   const changeTaskStatus = (taskId: string, taskStatus: boolean, todolistId: string) => {
     dispatch(changeTaskStatusAC({ taskId, isDone: taskStatus, todolistId }));
@@ -53,7 +56,7 @@ export const TasksList = ({ todolist }: TasksListProps) => {
             <MuiIconButton onClick={() => removeTask(todolist.id, t.id)}><MuiDeleteIcon /></MuiIconButton>
           </ListItem>
         );
-      })}</List> : <div>{"Tasks not found"}</div>}
+      })}</List> : <div style={{ padding: "20px 0" }}>{"Tasks not found"}</div>}
     </>
   );
 };
