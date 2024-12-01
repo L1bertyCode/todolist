@@ -1,5 +1,5 @@
 import { EditableSpan } from "@/fetures/EditableSpan";
-import { changeTaskStatusAC, changeTaskTitleAC, removeTaskAC, TasksStateType, TaskType } from "@/model/tasks-reducer/tasks-reducer";
+import { changeTaskStatusAC, changeTaskTitleAC, removeTaskAC, TasksStateType } from "@/model/tasks-reducer/tasks-reducer";
 import { Checkbox, List, ListItem } from "@mui/material";
 import { ChangeEvent } from "react";
 import MuiIconButton from '@mui/material/IconButton';
@@ -8,6 +8,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { getListItemSx } from "./Todolist.styles";
 import { RootState } from "@/app/providers/reduxProvider/store";
 import { TodolistType } from "@/model/todolists-reducer/todolists-reducer";
+import { TaskItem } from "./TaskItem";
 
 
 interface TasksListProps {
@@ -19,7 +20,7 @@ export const TasksList = ({ todolist }: TasksListProps) => {
   const dispatch = useDispatch();
 
   const removeTask = (taskId: string, todolistId: string) => {
-  dispatch(removeTaskAC({ taskId, todolistId }));
+    dispatch(removeTaskAC({ taskId, todolistId }));
 
   };
   const changeTaskStatus = (taskId: string, taskStatus: boolean, todolistId: string) => {
@@ -44,17 +45,11 @@ export const TasksList = ({ todolist }: TasksListProps) => {
           updateTask(todolist.id, t.id, title);
         };
         return (
-          <ListItem key={t.id}
-            sx={getListItemSx(t.isDone)}
-          >
-            <Checkbox
-              checked={t.isDone}
-              onChange={(e: ChangeEvent<HTMLInputElement>) => changeTaskStatus(t.id, e.currentTarget.checked, todolist.id)} />
-            <EditableSpan title={t.title}
-              onChange={changeTaskTitle}
-            />
-            <MuiIconButton onClick={() => removeTask(todolist.id, t.id)}><MuiDeleteIcon /></MuiIconButton>
-          </ListItem>
+          <TaskItem
+            key={t.id}
+            task={t}
+            todolist={todolist}
+          />
         );
       })}</List> : <div style={{ padding: "20px 0" }}>{"Tasks not found"}</div>}
     </>
