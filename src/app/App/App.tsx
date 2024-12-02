@@ -1,14 +1,15 @@
 import { RootState } from "../providers/reduxProvider/store";
 import { useSelector } from "react-redux";
 
-import { Header } from "@/widgets/Header";
-import { Main } from "@/widgets/Main";
+
 
 import { ThemeProvider } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import { getTheme } from "../theme";
 
 import s from "./App.module.css";
+import { Header } from "@/common/components/Header";
+import { Main } from "./Main";
 
 
 type ThemeMode = 'dark' | 'light';

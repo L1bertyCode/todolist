@@ -1,6 +1,6 @@
 import { AppBar, Container, IconButton, Switch, Toolbar } from "@mui/material";
 import s from "./Header.module.css";
-import { MenuButton } from "@/shared/ui/MenuButton/MenuButton";
+import { MenuButton } from "@/common/components/MenuButton/MenuButton";
 import MenuIcon from '@mui/icons-material/Menu';
 import { getTheme } from "@/app/theme";
 import { useDispatch, useSelector } from "react-redux";

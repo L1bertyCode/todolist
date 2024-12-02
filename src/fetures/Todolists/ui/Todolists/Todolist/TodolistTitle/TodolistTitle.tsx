@@ -1,9 +1,10 @@
-import { EditableSpan } from "@/fetures/EditableSpan";
+
 import MuiIconButton from '@mui/material/IconButton';
 import MuiDeleteIcon from '@mui/icons-material/Delete';
 import { useDispatch } from "react-redux";
 import { changeTodolistTitleAC, removeTodolistAC, TodolistType } from "@/model/todolists-reducer/todolists-reducer";
-import s from "./Todolist.module.css";
+import s from "../../Todolists.module.css";
+import { EditableSpan } from '@/common/components/EditableSpan';
 type Props = {
   todolist: TodolistType;
 };

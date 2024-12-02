@@ -1,6 +1,5 @@
 import { ChangeEvent, KeyboardEvent, useState } from "react";
 import s from "./EditableSpan.module.css";
-import { AppInput } from "@/shared/ui/AppInput/AppInput";
 
 import TextField from "@mui/material/TextField";
 
