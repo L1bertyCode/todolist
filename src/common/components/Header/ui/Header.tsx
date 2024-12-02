@@ -3,16 +3,17 @@ import s from "./Header.module.css";
 import { MenuButton } from "@/common/components/MenuButton/MenuButton";
 import MenuIcon from '@mui/icons-material/Menu';
 import { getTheme } from "@/app/theme";
-import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/app/providers/reduxProvider/store";
 import { changeThemeAC, ThemeMode } from "@/app/providers/appProvider/app-reducer";
+import { useAppSelector } from "@/common/hooks/useAppSelector";
+import { useAppDispatch } from "@/common/hooks/useAppDispatch";
 interface HeaderProps {
 
 };
 export const Header = ({ }: HeaderProps) => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
-  const themeMode = useSelector<RootState, ThemeMode>(state => state.app.themeMode);
+  const themeMode = useAppSelector<RootState, ThemeMode>(state => state.app.themeMode);
 
   const theme = getTheme(themeMode);
 

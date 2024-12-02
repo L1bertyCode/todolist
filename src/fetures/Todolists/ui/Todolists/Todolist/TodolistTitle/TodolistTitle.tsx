@@ -1,10 +1,11 @@
 
 import MuiIconButton from '@mui/material/IconButton';
 import MuiDeleteIcon from '@mui/icons-material/Delete';
-import { useDispatch } from "react-redux";
-import { changeTodolistTitleAC, removeTodolistAC, TodolistType } from "@/model/todolists-reducer/todolists-reducer";
+
 import s from "../../Todolists.module.css";
 import { EditableSpan } from '@/common/components/EditableSpan';
+import { changeTodolistTitleAC, removeTodolistAC, TodolistType } from '@/fetures/Todolists/model/todolists-reducer/todolists-reducer';
+import { useAppDispatch } from '@/common/hooks/useAppDispatch';
 type Props = {
   todolist: TodolistType;
 };
@@ -12,7 +13,7 @@ type Props = {
 export const TodolistTitle = ({ todolist }: Props) => {
   const { title, id } = todolist;
 
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   const removeTodolistHandler = () => {
     dispatch(removeTodolistAC(id));

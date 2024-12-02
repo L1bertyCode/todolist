@@ -1,5 +1,3 @@
-import { addTaskAC, TaskType } from "@/model/tasks-reducer/tasks-reducer";
-import { TodolistType } from '@/model/todolists-reducer/todolists-reducer';
 
 
 
@@ -7,8 +5,11 @@ import { TodolistType } from '@/model/todolists-reducer/todolists-reducer';
 import { FilterTasksButtons } from "./FilterTasksButtons/FilterTasksButtons";
 import { TasksList } from "./TasksList/TasksList";
 import { TodolistTitle } from "./TodolistTitle/TodolistTitle";
-import { useDispatch } from "react-redux";
+
 import { AddItemForm } from "@/common/components/AddItemForm";
+import { TodolistType } from "@/fetures/Todolists/model/todolists-reducer/todolists-reducer";
+import { addTaskAC } from "@/fetures/Todolists/model/tasks-reducer/tasks-reducer";
+import { useAppDispatch } from "@/common/hooks/useAppDispatch";
 
 
 interface TodolistProps {
@@ -18,7 +19,7 @@ interface TodolistProps {
 export const Todolist = ({
   todolist,
 }: TodolistProps) => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   const addTaskCallback = (title: string) => dispatch(addTaskAC({ title, todolistId: todolist.id }));;
 
