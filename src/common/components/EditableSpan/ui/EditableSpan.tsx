@@ -37,22 +37,7 @@ export const EditableSpan = ({ title, onChange }: EditableSpanProps) => {
             onChange(value);
           }}
         />
-        // <AppInput
-        //   type="text"
-        //   value={value}
-        //   onChange={(e: ChangeEvent<HTMLInputElement>) => { setValue(e.currentTarget.value); }}
-        //   autoFocus
-        //   onKeyDown={(e: KeyboardEvent<HTMLInputElement>) => {
-        //     if (e.key === "Enter") {
-        //       setEditMode(false);
-        //       onChangeTitle(value);
-        //     }
-        //   }}
-        //   onBlur={() => {
-        //     setEditMode(false);
-        //     onChangeTitle(value);
-        //   }}
-        // />
+
       }
 
     </>
