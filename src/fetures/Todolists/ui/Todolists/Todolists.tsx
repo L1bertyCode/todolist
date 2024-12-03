@@ -1,16 +1,15 @@
-
-
 import { Grid2 as Grid, Paper } from "@mui/material";
-import { RootState } from "@/app/providers/reduxProvider/store";
 import { Todolist } from "./Todolist/Todolist";
-import { changeTodolistTitleAC, TodolistType } from "../../model/todolists-reducer/todolists-reducer";
+import { changeTodolistTitleAC, } from "../../model/todolists-reducer/todolists-reducer";
 import { useAppDispatch } from "@/common/hooks/useAppDispatch";
 import { useAppSelector } from "@/common/hooks/useAppSelector";
+import { selectTodolists } from "../../model/todolists-reducer/todolistsSelectors";
+
 
 interface TodolistsProps { };
 export const Todolists = ({ }: TodolistsProps) => {
   const dispatch = useAppDispatch();
-  const todolists = useAppSelector<RootState, TodolistType[]>(state => state.todolists);
+  const todolists = useAppSelector(selectTodolists);
 
   const updateTodolist = (todolistId: string, title: string) => {
     dispatch(changeTodolistTitleAC({ todolistId, title }));

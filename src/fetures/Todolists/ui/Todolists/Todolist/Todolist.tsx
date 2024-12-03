@@ -1,7 +1,3 @@
-
-
-
-
 import { FilterTasksButtons } from "./FilterTasksButtons/FilterTasksButtons";
 import { TasksList } from "./TasksList/TasksList";
 import { TodolistTitle } from "./TodolistTitle/TodolistTitle";
@@ -10,7 +6,6 @@ import { AddItemForm } from "@/common/components/AddItemForm";
 import { TodolistType } from "@/fetures/Todolists/model/todolists-reducer/todolists-reducer";
 import { addTaskAC } from "@/fetures/Todolists/model/tasks-reducer/tasks-reducer";
 import { useAppDispatch } from "@/common/hooks/useAppDispatch";
-
 
 interface TodolistProps {
   todolist: TodolistType;

@@ -1,21 +1,14 @@
-
-import { RootState } from "@/app/providers/reduxProvider/store";
-
-
 import { List } from "@mui/material";
 import { TaskItem } from "./TaskItem/TaskItem";
 import { TodolistType } from "@/fetures/Todolists/model/todolists-reducer/todolists-reducer";
-import { TasksStateType } from "@/fetures/Todolists/model/tasks-reducer/tasks-reducer";
 import { useAppSelector } from "@/common/hooks/useAppSelector";
-
-
-
+import { selectTasks } from "@/fetures/Todolists/model/tasks-reducer/tasksSelectors";
 
 interface TasksListProps {
   todolist: TodolistType;
 };
 export const TasksList = ({ todolist }: TasksListProps) => {
-  const tasks = useAppSelector<RootState, TasksStateType>(state => state.tasks);
+  const tasks = useAppSelector(selectTasks);
 
   let tasksForTodolist = tasks[todolist.id];
   if (todolist.filter === 'active') {
