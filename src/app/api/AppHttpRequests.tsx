@@ -24,11 +24,39 @@ type CreateTodolistResponse = {
   };
 };
 
+export type GetTasksResponse = {
+  error: string | null;
+  totalCount: number;
+  items: DomainTask[];
+};
+
+export type DomainTask = {
+  description: string;
+  title: string;
+  status: number;
+  priority: number;
+  startDate: string;
+  deadline: string;
+  id: string;
+  todoListId: string;
+  order: number;
+  addedDate: string;
+};
+
+type CreateTaskResponse = {
+  resultCode: number;
+  messages: string[];
+  fieldsErrors: FieldError[];
+  data: {
+    item: DomainTask;
+  };
+};
 export const AppHttpRequests = () => {
 
-  const [todolists, setTodolists] = useState<Todolist[]>([]); const [tasks, setTasks] = useState<any>({});
-  const API_KEY = "";
-  const TOKEN = "";
+  const [todolists, setTodolists] = useState<Todolist[]>([]); const [tasks, setTasks] = useState<{ [key: string]: DomainTask[]; }>({});
+
+  const API_KEY = '';
+  const TOKEN = '';
 
   useEffect(() => {
     axios
@@ -38,8 +66,20 @@ export const AppHttpRequests = () => {
         },
       })
       .then(res => {
-        console.log(res.data);
-        setTodolists(res.data);
+        const todolists = res.data;
+        setTodolists(todolists);
+        todolists.forEach(tl => {
+          axios
+            .get<GetTasksResponse>(`https://social-network.samuraijs.com/api/1.1/todo-lists/${tl.id}/tasks`, {
+              headers: {
+                Authorization: `${TOKEN}`,
+                'API-KEY': `${API_KEY}`,
+              },
+            })
+            .then(res => {
+              setTasks({ ...tasks, [tl.id]: res.data.items });
+            });
+        });
       });
   }, []);
 
@@ -71,7 +111,6 @@ export const AppHttpRequests = () => {
         },
       })
       .then(res => {
-        console.log(res.data);
         setTodolists([...todolists.filter(tl => tl.id !== id)]);
       });
   };
@@ -95,7 +134,17 @@ export const AppHttpRequests = () => {
 
 
   const createTaskHandler = (title: string, todolistId: string) => {
-    // create task
+    axios.post<CreateTaskResponse>(`https://social-network.samuraijs.com/api/1.1/todo-lists/${todolistId}/tasks`,
+      { title },
+      {
+        headers: {
+          Authorization: `${TOKEN}`,
+          'API-KEY': `${API_KEY}`
+        },
+      }).then(res => {
+        const newTask = res.data.data.item;
+        setTasks({ ...tasks, [todolistId]: [newTask, ...tasks[todolistId]] });
+      });
   };
 
   const removeTaskHandler = (taskId: string, todolistId: string) => {
