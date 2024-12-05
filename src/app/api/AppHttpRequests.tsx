@@ -62,7 +62,20 @@ type UpdateTaskModel = {
 };
 
 type UpdateTaskResponse = {
+  resultCode: number;
+  messages: string[];
+  fieldsErrors: FieldError[];
+  data: {
+    item: DomainTask;
+  };
+};
 
+type DeleteTaskResponse = {
+  resultCode: number;
+  messages: string[];
+  fieldsErrors: FieldError[];
+  data: {
+  };
 };
 export const AppHttpRequests = () => {
 
@@ -161,7 +174,18 @@ export const AppHttpRequests = () => {
   };
 
   const removeTaskHandler = (taskId: string, todolistId: string) => {
+    axios
+      .delete<DeleteTaskResponse>(`https://social-network.samuraijs.com/api/1.1/todo-lists/${todolistId}/tasks/${taskId}`, {
+        headers: {
+          Authorization: `${TOKEN}`,
+          'API-KEY': `${API_KEY}`,
+        },
+      })
+      .then(res => {
+        console.log(res.data);
 
+        setTasks({ ...tasks, [todolistId]: [...tasks[todolistId].filter(t => t.id !== taskId)] });
+      });
   };
 
   const changeTaskStatusHandler = (e: ChangeEvent<HTMLInputElement>, task: DomainTask) => {
@@ -197,7 +221,7 @@ export const AppHttpRequests = () => {
     axios
       .put<UpdateTaskResponse>(
         `https://social-network.samuraijs.com/api/1.1/todo-lists/${task.todoListId}/tasks/${task.id}`,
-        { title },
+        title,
         {
           headers: {
             Authorization: `${TOKEN}`,
