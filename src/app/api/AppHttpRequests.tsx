@@ -51,6 +51,19 @@ type CreateTaskResponse = {
     item: DomainTask;
   };
 };
+
+type UpdateTaskModel = {
+  status: number;
+  title: string;
+  deadline: string;
+  description: string;
+  priority: number;
+  startDate: string;
+};
+
+type UpdateTaskResponse = {
+
+};
 export const AppHttpRequests = () => {
 
   const [todolists, setTodolists] = useState<Todolist[]>([]); const [tasks, setTasks] = useState<{ [key: string]: DomainTask[]; }>({});
@@ -148,15 +161,53 @@ export const AppHttpRequests = () => {
   };
 
   const removeTaskHandler = (taskId: string, todolistId: string) => {
-    // remove task
+
   };
 
-  const changeTaskStatusHandler = (e: ChangeEvent<HTMLInputElement>, task: any) => {
-    // update task status
+  const changeTaskStatusHandler = (e: ChangeEvent<HTMLInputElement>, task: DomainTask) => {
+    let status = e.currentTarget.checked ? 2 : 0;
+
+    const model: UpdateTaskModel = {
+      status,
+      title: task.title,
+      deadline: task.deadline,
+      description: task.description,
+      priority: task.priority,
+      startDate: task.startDate,
+    };
+
+    axios
+      .put<UpdateTaskResponse>(
+        `https://social-network.samuraijs.com/api/1.1/todo-lists/${task.todoListId}/tasks/${task.id}`,
+        model,
+        {
+          headers: {
+            Authorization: `${TOKEN}`,
+            'API-KEY': `${API_KEY}`,
+          },
+        }
+      )
+      .then(res => {
+        const newTasks = tasks[task.todoListId].map(t => (t.id === task.id ? { ...t, ...model } : t));
+        setTasks({ ...tasks, [task.todoListId]: newTasks });
+      });
   };
 
-  const changeTaskTitleHandler = (title: string, task: any) => {
-    // update task title
+  const changeTaskTitleHandler = (title: string, task: DomainTask) => {
+    axios
+      .put<UpdateTaskResponse>(
+        `https://social-network.samuraijs.com/api/1.1/todo-lists/${task.todoListId}/tasks/${task.id}`,
+        { title },
+        {
+          headers: {
+            Authorization: `${TOKEN}`,
+            'API-KEY': `${API_KEY}`,
+          },
+        }
+      )
+      .then(res => {
+        setTasks({ ...tasks, [task.todoListId]: [...tasks[task.todoListId].map(t => t.id === task.id ? { ...t, title } : t)] });
+      });
   };
 
   return (
@@ -178,11 +229,11 @@ export const AppHttpRequests = () => {
 
             {/* Tasks */}
             {!!tasks[tl.id] &&
-              tasks[tl.id].map((task: any) => {
+              tasks[tl.id].map((task: DomainTask) => {
                 return (
                   <div key={task.id}>
                     <Checkbox
-                      checked={task.isDone}
+                      checked={task.status === 2 ? true : false}
                       onChange={e => changeTaskStatusHandler(e, task)}
                     />
                     <EditableSpan
