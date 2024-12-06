@@ -1,4 +1,3 @@
-import { todolistsApi } from './api/todolistsApi';
 
 export { Todolists } from './ui/Todolists/Todolists';
 export type {
@@ -13,3 +12,4 @@ export type {
 } from "./api/tasksApi.types";
 
 export { todolistsApi } from "./api/todolistsApi";
+export { tasksApi } from './api/tasksApi';
