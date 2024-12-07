@@ -1,7 +1,7 @@
 
 export { Todolists } from './ui/Todolists/Todolists';
 export type {
-  TodolistType, CreateTodolistResponse, DeleteTodolistResponse, UpdateTodolistResponse, FieldError
+  TodolistType
 } from "./api/todolistsApi.types";
 
 export type {

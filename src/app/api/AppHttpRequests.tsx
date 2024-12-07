@@ -9,8 +9,10 @@ import axios from 'axios';
 import { tasksApi, todolistsApi } from '@/fetures/Todolists';
 
 import {
-  CreateTaskResponse, DeleteTaskResponse, DeleteTodolistResponse, DomainTask,
-  GetTasksResponse, TodolistType, UpdateTaskModel, UpdateTaskResponse
+  CreateTaskResponse,
+  DomainTask,
+  TodolistType,
+  UpdateTaskModel,
 } from '@/fetures/Todolists';
 import { instance } from '@/common/common/instance/instance';
 
@@ -18,9 +20,7 @@ import { instance } from '@/common/common/instance/instance';
 
 export const AppHttpRequests = () => {
 
-  const [todolists, setTodolists] = useState<TodolistType[]>([]); const [tasks, setTasks] = useState<{ [key: string]: DomainTask[]; }>({});
-
-
+  const [todolists, setTodolists] = useState<TodolistType[]>([]); const [tasks, setTasks] = useState<{ [key: string]: DomainTask[]; }>({})
 
   useEffect(() => {
     todolistsApi.getTodolists().then(res => {
