@@ -4,6 +4,7 @@ import { Configuration } from 'webpack';
 import { webpackDevServer } from './config/build/webpackDevServer';
 import { BuildEnv } from './config/types/config';
 import MiniCssExtractPlugin from "mini-css-extract-plugin";
+const Dotenv = require('dotenv-webpack');
 
 const config = (env: BuildEnv): Configuration => {
   const mode = env.mode || "development";
@@ -64,7 +65,8 @@ const config = (env: BuildEnv): Configuration => {
     plugins: [new HtmlWebpackPlugin({ template: paths.html }), new MiniCssExtractPlugin({
       filename: "css/[name].[contenthash:8].css",
       chunkFilename: "css/[name].[contenthash:8].css"
-    })],
+    }),
+    new Dotenv()],
     resolve: {
       extensions: ['.tsx', '.ts', '.js'],
       alias: {

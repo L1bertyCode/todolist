@@ -9,18 +9,18 @@ import axios from 'axios';
 import { tasksApi, todolistsApi } from '@/fetures/Todolists';
 
 import {
-  CreateTaskResponse,
   DomainTask,
   TodolistType,
   UpdateTaskModel,
 } from '@/fetures/Todolists';
 import { instance } from '@/common/common/instance/instance';
+import { BaseTaskResponse } from '@/common/types/types';
 
 
 
 export const AppHttpRequests = () => {
 
-  const [todolists, setTodolists] = useState<TodolistType[]>([]); const [tasks, setTasks] = useState<{ [key: string]: DomainTask[]; }>({})
+  const [todolists, setTodolists] = useState<TodolistType[]>([]); const [tasks, setTasks] = useState<{ [key: string]: DomainTask[]; }>({});
 
   useEffect(() => {
     todolistsApi.getTodolists().then(res => {
@@ -63,7 +63,7 @@ export const AppHttpRequests = () => {
 
 
   const createTaskHandler = (title: string, todolistId: string) => {
-    instance.post<CreateTaskResponse>(`todo-lists/${todolistId}/tasks`,
+    instance.post(`todo-lists/${todolistId}/tasks`,
       { title })
       .then(res =>
         setTasks({

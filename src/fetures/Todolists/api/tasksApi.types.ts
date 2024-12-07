@@ -19,15 +19,6 @@ export type DomainTask = {
   addedDate: string;
 };
 
-export type CreateTaskResponse = {
-  resultCode: number;
-  messages: string[];
-  fieldsErrors: FieldError[];
-  data: {
-    item: DomainTask;
-  };
-};
-
 export type UpdateTaskModel = {
   status: number;
   title: string;
@@ -37,19 +28,3 @@ export type UpdateTaskModel = {
   startDate: string;
 };
 
-export type UpdateTaskResponse = {
-  resultCode: number;
-  messages: string[];
-  fieldsErrors: FieldError[];
-  data: {
-    item: DomainTask;
-  };
-};
-
-export type DeleteTaskResponse = {
-  resultCode: number;
-  messages: string[];
-  fieldsErrors: FieldError[];
-  data: {
-  };
-};

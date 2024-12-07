@@ -6,9 +6,8 @@ export type {
 
 export type {
   DomainTask,
-  CreateTaskResponse, GetTasksResponse,
-  DeleteTaskResponse, UpdateTaskModel,
-  UpdateTaskResponse
+  GetTasksResponse,
+  UpdateTaskModel
 } from "./api/tasksApi.types";
 
 export { todolistsApi } from "./api/todolistsApi";

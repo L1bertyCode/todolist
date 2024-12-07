@@ -10,3 +10,11 @@ export type BaseResponse<D = {}> = {
   fieldsErrors: FieldError[];
   data: D;
 };
+export type BaseTaskResponse<D = {}> = {
+  resultCode: number;
+  messages: string[];
+  fieldsErrors: FieldError[];
+  data: {
+    item: D;
+  };
+};
