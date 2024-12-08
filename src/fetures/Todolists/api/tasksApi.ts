@@ -16,7 +16,7 @@ export const tasksApi = {
   removeTask(payload: { taskId: string, todolistId: string; }) {
     const { taskId, todolistId } = payload;
     return instance.delete<BaseTaskResponse>(
-      `todo-lists/${todolistId}/tasks${taskId}`
+      `todo-lists/${todolistId}/tasks/${taskId}`
     );
   },
   changeTaskStatus(payload: { model: UpdateTaskModel, todolistId: string, taskId: string; }) {

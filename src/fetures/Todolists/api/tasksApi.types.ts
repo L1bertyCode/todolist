@@ -1,3 +1,4 @@
+import { TaskPriority, TaskStatus } from "@/common/enums/enums";
 import { FieldError } from "@/common/types/types";
 
 export type GetTasksResponse = {
@@ -9,8 +10,8 @@ export type GetTasksResponse = {
 export type DomainTask = {
   description: string;
   title: string;
-  status: number;
-  priority: number;
+  status: TaskStatus;
+  priority: TaskPriority;
   startDate: string;
   deadline: string;
   id: string;
@@ -20,11 +21,11 @@ export type DomainTask = {
 };
 
 export type UpdateTaskModel = {
-  status: number;
   title: string;
   deadline: string;
   description: string;
-  priority: number;
+  status: TaskStatus;
+  priority: TaskPriority;
   startDate: string;
 };
 
