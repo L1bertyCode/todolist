@@ -1,5 +1,5 @@
 export var ActionTypes = {
-  INIT: '@@redux/INIT',
-};
+  INIT: "@@redux/INIT",
+}
 
-dispatch({ type: ActionTypes.INIT });
+dispatch({ type: ActionTypes.INIT })

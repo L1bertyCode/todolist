@@ -1,1 +1,1 @@
-export { EditableSpan } from "./ui/EditableSpan";
+export { EditableSpan } from "./ui/EditableSpan"

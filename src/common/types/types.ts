@@ -1,20 +1,19 @@
-
 export type FieldError = {
-  error: string;
-  field: string;
-};
+  error: string
+  field: string
+}
 
 export type BaseResponse<D = {}> = {
-  resultCode: number;
-  messages: string[];
-  fieldsErrors: FieldError[];
-  data: D;
-};
+  resultCode: number
+  messages: string[]
+  fieldsErrors: FieldError[]
+  data: D
+}
 export type BaseTaskResponse<D = {}> = {
-  resultCode: number;
-  messages: string[];
-  fieldsErrors: FieldError[];
+  resultCode: number
+  messages: string[]
+  fieldsErrors: FieldError[]
   data: {
-    item: D;
-  };
-};
+    item: D
+  }
+}

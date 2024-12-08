@@ -1,3 +1,3 @@
-import { RootState } from "@/app/providers/reduxProvider/store";
+import { RootState } from "@/app/providers/reduxProvider/store"
 
-export const selectTasks = (state: RootState) => state.tasks;
+export const selectTasks = (state: RootState) => state.tasks

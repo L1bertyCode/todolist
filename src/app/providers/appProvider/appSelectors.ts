@@ -1,3 +1,3 @@
-import { RootState } from "../reduxProvider/store";
+import { RootState } from "../reduxProvider/store"
 
-export const selectThemeMode = (state: RootState) => state.app.themeMode;
+export const selectThemeMode = (state: RootState) => state.app.themeMode

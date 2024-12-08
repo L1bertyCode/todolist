@@ -1,38 +1,41 @@
-import { Checkbox, ListItem } from "@mui/material";
+import { Checkbox, ListItem } from "@mui/material"
 
-import { ChangeEvent } from "react";
+import { ChangeEvent } from "react"
 
-import MuiIconButton from '@mui/material/IconButton';
-import MuiDeleteIcon from '@mui/icons-material/Delete';
+import MuiIconButton from "@mui/material/IconButton"
+import MuiDeleteIcon from "@mui/icons-material/Delete"
 
-import { EditableSpan } from "@/common/components/EditableSpan";
-import { getListItemSx } from "./TaskItem.style";
-import { changeTaskStatusAC, changeTaskTitleAC, removeTaskAC, TaskType } from "@/fetures/Todolists/model/tasks-reducer/tasks-reducer";
-import { TodolistType } from "@/fetures/Todolists/model/todolists-reducer/todolists-reducer";
-import { useAppDispatch } from "@/common/hooks/useAppDispatch";
-
+import { EditableSpan } from "@/common/components/EditableSpan"
+import { getListItemSx } from "./TaskItem.style"
+import {
+  changeTaskStatusAC,
+  changeTaskTitleAC,
+  removeTaskAC,
+  TaskType,
+} from "@/fetures/Todolists/model/tasks-reducer/tasks-reducer"
+import { TodolistType } from "@/fetures/Todolists/model/todolists-reducer/todolists-reducer"
+import { useAppDispatch } from "@/common/hooks/useAppDispatch"
 
 type Props = {
-  task: TaskType;
-  todolist: TodolistType;
-};
+  task: TaskType
+  todolist: TodolistType
+}
 
 export const TaskItem = ({ task, todolist }: Props) => {
-  const dispatch = useAppDispatch();
+  const dispatch = useAppDispatch()
 
   const removeTaskHandler = () => {
-    dispatch(removeTaskAC({ taskId: task.id, todolistId: todolist.id }));
+    dispatch(removeTaskAC({ taskId: task.id, todolistId: todolist.id }))
+  }
 
-  };
-
-  const changeTaskStatusHandler = (e:   ChangeEvent<HTMLInputElement>) => {
-    const isDone = e.currentTarget.checked;
-    dispatch(changeTaskStatusAC({ taskId: task.id, isDone, todolistId: todolist.id }));
-  };
+  const changeTaskStatusHandler = (e: ChangeEvent<HTMLInputElement>) => {
+    const isDone = e.currentTarget.checked
+    dispatch(changeTaskStatusAC({ taskId: task.id, isDone, todolistId: todolist.id }))
+  }
 
   const changeTaskTitleHandler = (title: string) => {
-    dispatch(changeTaskTitleAC({ taskId: task.id, title, todolistId: todolist.id }));
-  };
+    dispatch(changeTaskTitleAC({ taskId: task.id, title, todolistId: todolist.id }))
+  }
 
   return (
     <ListItem key={task.id} sx={getListItemSx(task.isDone)}>
@@ -44,5 +47,5 @@ export const TaskItem = ({ task, todolist }: Props) => {
         <MuiDeleteIcon />
       </MuiIconButton>
     </ListItem>
-  );
-};
+  )
+}
